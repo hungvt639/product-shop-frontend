@@ -1,16 +1,20 @@
 import { Pagination } from "../api/interface";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+
 type PaginationProps = {
     data: Pagination;
     onPageChange?: (page: number) => void;
 };
+
 const PaginationComponent = (props: PaginationProps) => {
     const { data, onPageChange } = props;
+
     const pageChange = (value: number) => {
         if (onPageChange) {
             onPageChange(value);
         }
     };
+
     return (
         <div className="flex items-center text-base font-semibold pb-10 pt-5">
             {data.hasPrevPage && (
@@ -50,4 +54,5 @@ const PaginationComponent = (props: PaginationProps) => {
         </div>
     );
 };
+
 export default PaginationComponent;

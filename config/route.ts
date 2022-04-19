@@ -1,5 +1,3 @@
-const ADMIN = "/admin";
-
 const route = {
     HOME: "/",
     SHOP: "/shop",
@@ -9,7 +7,7 @@ const route = {
     SECURITY: "/page/security",
     RULES: "/page/rules",
     CONTACT: "/page/contact",
-    SERVER_ERROR: "/500",
+    // SERVER_ERROR: "/500",
     PRODUCT: "/product",
     CHECKOUT: "/checkout",
     CART: "/cart",

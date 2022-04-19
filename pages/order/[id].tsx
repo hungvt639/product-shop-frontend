@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
+import { Image, Steps, Tag } from "antd";
 import { NextPage, NextPageContext } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { IoReturnUpBackOutline } from "react-icons/io5";
 import API from "../../api";
@@ -9,9 +11,9 @@ import { Type } from "../../api/repository/typeAPI";
 import Footer from "../../components/common/footer";
 import Header from "../../components/common/header";
 import route from "../../config/route";
-import { Image, Steps, Tag } from "antd";
+import _env from "../../config/_env";
 import utils from "../../utils";
-import { useMemo } from "react";
+
 const { Step } = Steps;
 
 type OrderProps = {
@@ -24,6 +26,9 @@ const OrderDetailComponent: NextPage<OrderProps> = (props) => {
 
     return (
         <>
+            <Head>
+                <title>{_env.SHOP_NAME}</title>
+            </Head>
             <Header types={types ?? []} />
             {order && (
                 <div className="_max-width _order">

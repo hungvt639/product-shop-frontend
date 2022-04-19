@@ -24,6 +24,7 @@ type ShipmentDetailsProps = {
     >;
     setCheckout: Dispatch<SetStateAction<number>>;
 };
+
 const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
     const { values, setValues, setCheckout } = props;
     const [vali, setVali] = useState({
@@ -150,4 +151,5 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
         </form>
     );
 };
+
 export default ShipmentDetailsComponent;

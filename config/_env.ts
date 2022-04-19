@@ -5,6 +5,5 @@ const _env = {
     EMAIL: "abcxyz@gmail.com",
     SHOP_NAME: "Shop Uyn",
 };
-console.log("e", _env);
 
 export default _env;

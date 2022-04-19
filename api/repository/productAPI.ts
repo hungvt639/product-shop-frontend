@@ -22,6 +22,12 @@ class ProductAPI {
     public getProduct = (slug: string): Promise<AxiosResponse<Product>> => {
         return AxiosAPI(true).get(`${this.resource}/${slug}`);
     };
+    public search = async (
+        obj: SearchBody
+    ): Promise<AxiosResponse<SearchResponse>> => {
+        const str = utils.objToSearch(obj);
+        return AxiosAPI(true).get(`${this.resource}/search${str}`);
+    };
 }
 
 export default new ProductAPI();
@@ -43,4 +49,36 @@ export interface Product {
     updated_at: string;
     slug: string;
     sames?: Product[];
+}
+
+interface ProductSearch {
+    _index: string;
+    _id: string;
+    _score: number;
+    _source: {
+        name: string;
+        slug: string;
+        img: string;
+        img1: string;
+        price: number;
+        type: {
+            _id: string;
+            name: string;
+            created_at: string;
+            updated_at: string;
+            slug: string;
+        };
+        isSale: boolean;
+        sold: number;
+    };
+}
+
+export interface SearchResponse {
+    total: number;
+    max_score: number;
+    hits: ProductSearch[];
+    extTotal: {
+        value: number;
+        relation: string;
+    };
 }

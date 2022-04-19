@@ -19,4 +19,5 @@ const CarouselComponent = ({ carousels }: CarouselProps) => {
         </div>
     );
 };
+
 export default CarouselComponent;

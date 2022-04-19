@@ -3,14 +3,17 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AiOutlineLine, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdOutlineCheckCircle } from "react-icons/md";
 import Cod from "../public/img/cod.svg";
+
 type PaymentMethodsProps = {
     ship?: number;
     setShip: Dispatch<SetStateAction<number | undefined>>;
     createOrder: () => Promise<void>;
 };
+
 const PaymentMethodsComponent = (props: PaymentMethodsProps) => {
     const { ship, setShip, createOrder } = props;
     const [loading, setLoading] = useState(false);
+
     const submit = async () => {
         if (!loading) {
             setLoading(true);
@@ -18,9 +21,11 @@ const PaymentMethodsComponent = (props: PaymentMethodsProps) => {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         setShip(30000);
     }, [setShip]);
+
     return (
         <div className="text-base">
             <h1 className="text-base font-bold">Phương thức vận chuyển</h1>
@@ -62,4 +67,5 @@ const PaymentMethodsComponent = (props: PaymentMethodsProps) => {
         </div>
     );
 };
+
 export default PaymentMethodsComponent;

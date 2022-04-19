@@ -3,6 +3,7 @@ type DropdownProps = {
     overlay: JSX.Element | string | undefined;
     placement?: "top100_left" | "top_left100" | "top100_right";
 };
+
 function getplacement(
     placement?: "top100_left" | "top_left100" | "top100_right"
 ) {
@@ -18,6 +19,7 @@ function getplacement(
         }
     }
 }
+
 const Dropdown = (props: DropdownProps) => {
     const { children, overlay, placement } = props;
 
@@ -30,4 +32,5 @@ const Dropdown = (props: DropdownProps) => {
         </div>
     );
 };
+
 export default Dropdown;

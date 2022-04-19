@@ -2,10 +2,12 @@
 import { Cart } from "../store";
 import utils from "../utils";
 import { AiOutlineLine } from "react-icons/ai";
+
 type ProductCheckoutProps = {
     carts: Cart[];
     ship?: number;
 };
+
 const ProductCheckoutComponent = (props: ProductCheckoutProps) => {
     const { carts, ship } = props;
     return (
@@ -90,4 +92,5 @@ const ProductCheckoutComponent = (props: ProductCheckoutProps) => {
         </div>
     );
 };
+
 export default ProductCheckoutComponent;

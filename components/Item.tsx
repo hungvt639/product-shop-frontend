@@ -6,6 +6,7 @@ import route from "../config/route";
 type ItemProps = {
     item: Product;
 };
+
 const ItemComponent = (props: ItemProps) => {
     const { item } = props;
     return (
@@ -31,4 +32,5 @@ const ItemComponent = (props: ItemProps) => {
         </div>
     );
 };
+
 export default ItemComponent;

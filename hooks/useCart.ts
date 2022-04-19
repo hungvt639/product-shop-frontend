@@ -1,12 +1,10 @@
-import { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "../store";
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import action from "../store/actions";
-import utils from "../utils";
 
 const useCart = () => {
     const dispatch = useDispatch();
-    const carts = useSelector((s: AppState) => s.cart);
+    // const carts = useSelector((s: AppState) => s.cart);
     const reomteInCart = useCallback(
         (index: number) => {
             dispatch(action.removeIndex(index));

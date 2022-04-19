@@ -1,3 +1,4 @@
+import { Select } from "antd";
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
@@ -13,6 +14,9 @@ import ListItems from "../../components/ListItems";
 import PaginationCpn from "../../components/Pagination";
 import route from "../../config/route";
 import utils from "../../utils";
+
+const { Option } = Select;
+
 type ShopProps = {
     products?: Pagination<Product>;
     types?: Type[];
@@ -20,9 +24,7 @@ type ShopProps = {
 };
 const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
     const router = useRouter();
-    const onPageChange = (page: number) => {
-        router.push(utils.toUrl(route.SHOP, { ...query, page }));
-    };
+
     const breadcrumb = useMemo(() => {
         return [
             {
@@ -35,6 +37,13 @@ const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
             },
         ];
     }, []);
+    const onPageChange = (page: number) => {
+        router.push(utils.toUrl(route.SHOP, { ...query, page }));
+    };
+
+    const handleChange = (value: string) => {
+        router.push(utils.toUrl(route.SHOP, { ...query, sort: value }));
+    };
     return (
         <>
             <Header types={types ?? []} />
@@ -44,9 +53,21 @@ const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
                     <Sider types={types ?? []} />
                 </div>
                 <div className="_right">
-                    <div className="flex px-5">
+                    <div className="flex px-5 justify-between">
                         <h1>BEST SELLER</h1>
-                        <div>Input</div>
+                        <Select
+                            className="_select-ant"
+                            placeholder="Lọc"
+                            defaultValue={query?.sort}
+                            style={{ width: 120 }}
+                            onChange={handleChange}
+                        >
+                            <Option value="name">Tên A-Z</Option>
+                            <Option value="-name">Tên Z-A</Option>
+                            <Option value="-sort">Bán chạy nhất</Option>
+                            <Option value="price">Giá tăng dần</Option>
+                            <Option value="-price">Giá giảm dần</Option>
+                        </Select>
                     </div>
                     <div>{products && <ListItems items={products.docs} />}</div>
                     <div className="flex justify-center">

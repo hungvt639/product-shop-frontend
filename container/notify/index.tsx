@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { MdCheckCircle, MdError } from "react-icons/md";
+
 type NotifiMessageProps = {
     message: string | JSX.Element;
     time: number;
     classChill: string;
 };
+
 const NotifyMessage = (props: NotifiMessageProps) => {
+    const { message, time, classChill } = props;
+
     const [show, setShow] = useState<boolean>(false);
     const [remove, setRemove] = useState<boolean>(false);
-    const { message, time, classChill } = props;
+
     useEffect(() => {
         setShow(true);
         let timerShow = setTimeout(() => setShow(false), time);
         let timerRemove = setTimeout(() => setRemove(true), time + 500);
-
         return () => {
             clearTimeout(timerShow);
             clearTimeout(timerRemove);
@@ -31,9 +34,11 @@ const NotifyMessage = (props: NotifiMessageProps) => {
                 return <></>;
         }
     };
+
     if (remove) {
         return <></>;
     }
+
     return (
         <div
             className={

@@ -1,22 +1,27 @@
 import { NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
+import { BsChevronRight } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import API from "../api";
 import { Type } from "../api/repository/typeAPI";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
-import route from "../config/route";
-import useCheckout from "../hooks/useCheckout";
-import { AppState } from "../store";
-import { BsChevronRight } from "react-icons/bs";
+import PaymentMethods from "../components/PaymentMethods";
 import ProductCheckout from "../components/ProductCheckout";
 import ShipmentDetails from "../components/ShipmentDetails";
-import PaymentMethods from "../components/PaymentMethods";
+import route from "../config/route";
+import _env from "../config/_env";
+import useCheckout from "../hooks/useCheckout";
+import { AppState } from "../store";
+
 type CheckoutProps = {
     types?: Type[];
 };
+
 const CheckoutComponent: NextPage<CheckoutProps> = ({ types }) => {
     const carts = useSelector((s: AppState) => s.cart);
+
     const {
         checkout,
         setCheckout,
@@ -26,8 +31,12 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({ types }) => {
         values,
         createOrder,
     } = useCheckout();
+
     return (
         <>
+            <Head>
+                <title>{_env.SHOP_NAME}</title>
+            </Head>
             <Header types={types ?? []} />
             <div className="_max-width flex items-center text-base">
                 <Link href={route.CART}>

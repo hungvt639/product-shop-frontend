@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { useMemo } from "react";
 import API from "../../api";
@@ -9,6 +10,7 @@ import Header from "../../components/common/header";
 import Sider from "../../components/common/sider";
 import ListItemsComponent from "../../components/ListItems";
 import route from "../../config/route";
+import _env from "../../config/_env";
 
 type ProductComponentProps = {
     products: TypeProduct[];
@@ -30,6 +32,9 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
 
     return (
         <>
+            <Head>
+                <title>{_env.SHOP_NAME}</title>
+            </Head>
             <Header types={types ?? []} />{" "}
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex _shops">

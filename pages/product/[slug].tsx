@@ -1,4 +1,5 @@
 import { NextPage, NextPageContext } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { useMemo } from "react";
 import API from "../../api";
@@ -11,10 +12,12 @@ import Header from "../../components/common/header";
 import ListItems from "../../components/ListItems";
 import route from "../../config/route";
 import useProduct from "../../hooks/useProduct";
+
 type ProductProps = {
     product?: Product;
     types?: Type[];
 };
+
 const ProductDetailComponent: NextPage<ProductProps> = (props) => {
     const { product, types } = props;
 
@@ -44,6 +47,9 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
 
     return (
         <>
+            <Head>
+                <title>{product?.name}</title>
+            </Head>
             <Header types={types ?? []} />
             <Breadcrumb data={breadcrumb} />
             {product && (

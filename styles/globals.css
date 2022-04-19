@@ -98,3 +98,12 @@ input::-webkit-inner-spin-button {
     > .ant-steps-item-tail::after {
     background-color: #009900;
 }
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: #a0a0a0;
+}
+
+._select-ant.ant-select-open .ant-select-selector,
+._select-ant.ant-select-focused .ant-select-selector {
+    border-color: #a0a0a0 !important;
+    box-shadow: 0 0 0 2px rgba(203, 203, 203, 0.2) !important;
+}

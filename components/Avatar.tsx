@@ -4,9 +4,12 @@ import { useState } from "react";
 type AvatarProps = {
     imgs: string[];
 };
+
 const AvatarComponent = (props: AvatarProps) => {
     const { imgs } = props;
+
     const [index, setIndex] = useState(0);
+
     return (
         <div className="flex flex-row">
             <div className="">
@@ -30,4 +33,5 @@ const AvatarComponent = (props: AvatarProps) => {
         </div>
     );
 };
+
 export default AvatarComponent;

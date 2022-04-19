@@ -1,18 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 import { NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
+import { useMemo } from "react";
+import { IoReturnUpBackOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import API from "../api";
 import { Type } from "../api/repository/typeAPI";
+import BreadcrumbComponent from "../components/Breadcrumb";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
 import route from "../config/route";
+import _env from "../config/_env";
+import useCart from "../hooks/useCart";
 import { AppState } from "../store";
 import utils from "../utils";
-import useCart from "../hooks/useCart";
-import { IoReturnUpBackOutline } from "react-icons/io5";
-import BreadcrumbComponent from "../components/Breadcrumb";
-import { useMemo } from "react";
 
 type CartProps = {
     types?: Type[];
@@ -30,6 +32,9 @@ const CartComponentComponent: NextPage<CartProps> = ({ types }) => {
     }, []);
     return (
         <>
+            <Head>
+                <title>{_env.SHOP_NAME}</title>
+            </Head>
             <Header types={types ?? []} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width _cart">

@@ -4,8 +4,10 @@ import Item from "./Item";
 type ListItemsProps = {
     items: Product[];
 };
+
 const ListItemsComponent = (props: ListItemsProps) => {
     const { items } = props;
+
     return (
         <div className="w-full flex flex-wrap">
             {items.map((item) => (
@@ -14,4 +16,5 @@ const ListItemsComponent = (props: ListItemsProps) => {
         </div>
     );
 };
+
 export default ListItemsComponent;

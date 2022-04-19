@@ -12,6 +12,7 @@ import { errorAPI } from "../utils/error";
 const useCheckout = () => {
     const router = useRouter();
     const dispatch = useDispatch();
+
     const [checkout, setCheckout] = useState(0);
     const [ship, setShip] = useState<number>();
     const carts = useSelector((s: AppState) => s.cart);

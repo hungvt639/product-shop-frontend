@@ -1,16 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import type { NextPage } from "next";
+import Head from "next/head";
+import Link from "next/link";
 import API from "../api";
+import { Pagination } from "../api/interface";
 import { Carousel } from "../api/repository/carouselAPI";
 import { Product } from "../api/repository/productAPI";
-import Footer from "../components/common/footer";
-import Header from "../components/common/header";
 import { Type } from "../api/repository/typeAPI";
 import CarouselComponent from "../components/Carousel";
+import Footer from "../components/common/footer";
+import Header from "../components/common/header";
 import ListItems from "../components/ListItems";
-import { Pagination } from "../api/interface";
-import Link from "next/link";
 import route from "../config/route";
+import _env from "../config/_env";
 
 type HomeProps = {
     carousels?: Carousel[];
@@ -25,6 +27,9 @@ const HomeComponent: NextPage<HomeProps> = ({
 }: HomeProps) => {
     return (
         <>
+            <Head>
+                <title>{_env.SHOP_NAME}</title>
+            </Head>
             <Header types={types ?? []} />
             <CarouselComponent carousels={carousels ?? []} />
             <h1 className="text-center text-4xl font-bold my-9">

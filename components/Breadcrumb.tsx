@@ -7,8 +7,10 @@ type BreadcrumbProps = {
         link: string;
     }[];
 };
+
 const BreadcrumbComponent = (props: BreadcrumbProps) => {
     const { data } = props;
+
     return (
         <div className="w-full _breadcrumb mb-5">
             <div className="_max-width py-2 flex">
@@ -34,4 +36,5 @@ const BreadcrumbComponent = (props: BreadcrumbProps) => {
         </div>
     );
 };
+
 export default BreadcrumbComponent;

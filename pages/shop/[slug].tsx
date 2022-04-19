@@ -1,4 +1,5 @@
 import { NextPage, NextPageContext } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import API from "../../api";
@@ -12,17 +13,20 @@ import ListItems from "../../components/ListItems";
 import Pagination from "../../components/Pagination";
 import route from "../../config/route";
 import utils from "../../utils";
+
 type TypeProductProps = {
     type?: TypeProduct;
     types?: Type[];
     query?: SearchBody;
 };
+
 const TypeProductComponent: NextPage<TypeProductProps> = ({
     type,
     types,
     query,
 }) => {
     const router = useRouter();
+
     const onPageChange = (page: number) => {
         router.push(
             utils.toUrl(`${route.SHOP}/${type?.slug}`, { ...query, page })
@@ -48,6 +52,9 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
 
     return (
         <>
+            <Head>
+                <title>{type?.name}</title>
+            </Head>
             <Header types={types ?? []} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex _shops">
