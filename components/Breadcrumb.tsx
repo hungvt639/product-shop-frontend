@@ -13,15 +13,21 @@ const BreadcrumbComponent = (props: BreadcrumbProps) => {
         <div className="w-full _breadcrumb mb-5">
             <div className="_max-width py-2 flex">
                 <Link href={route.HOME}>
-                    <a>Trang chủ</a>
+                    <a className="text-blue-500">TRANG CHỦ</a>
                 </Link>
                 <div className="mx-2">/</div>
                 {data.map((d, i) => (
                     <div className="flex" key={i}>
-                        <Link href={d.link}>
-                            <a>{d.name}</a>
-                        </Link>
-                        {i !== data.length - 1 && <div className="mx-2">/</div>}
+                        {i !== data.length - 1 ? (
+                            <>
+                                <Link href={d.link}>
+                                    <a className="text-blue-500">{d.name}</a>
+                                </Link>
+                                <div className="mx-2">/</div>
+                            </>
+                        ) : (
+                            <p>{d.name} </p>
+                        )}
                     </div>
                 ))}
             </div>

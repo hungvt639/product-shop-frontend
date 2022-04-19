@@ -1,5 +1,6 @@
 import { NextPage, NextPageContext } from "next";
 import Link from "next/link";
+import { useMemo } from "react";
 import API from "../../api";
 import { Product } from "../../api/repository/productAPI";
 import { Type } from "../../api/repository/typeAPI";
@@ -20,16 +21,26 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
     const { setSize, size, color, setColor, amount, changeAmount, addToCart } =
         useProduct(product);
 
-    const breadcrumb = [
-        {
-            name: "SHOP",
-            link: route.SHOP,
-        },
-        {
-            name: product?.name ?? "",
-            link: `${route.PRODUCT}/${product?.slug}`,
-        },
-    ];
+    const breadcrumb = useMemo(() => {
+        return [
+            {
+                name: "SẢN PHẨM",
+                link: route.PRODUCT,
+            },
+            {
+                name: "SHOP",
+                link: route.SHOP,
+            },
+            {
+                name: product?.type.name ?? "",
+                link: route.SHOP + "/" + product?.type.slug ?? "",
+            },
+            {
+                name: product?.name ?? "",
+                link: `${route.PRODUCT}/${product?.slug}`,
+            },
+        ];
+    }, [product?.name, product?.slug, product?.type.name, product?.type.slug]);
 
     return (
         <>
@@ -135,7 +146,7 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
                     <div className="w-full">
                         <h1 className="font-bold text-2xl text-center mt-5">
                             <Link href={`${route.SHOP}/${product.type.slug}`}>
-                                <a>SẢN PHẨM LIÊN QUAN</a>
+                                <a>/ SẢN PHẨM LIÊN QUAN /</a>
                             </Link>
                         </h1>
                         {product.sames && <ListItems items={product.sames} />}

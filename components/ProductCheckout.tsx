@@ -11,6 +11,11 @@ const ProductCheckoutComponent = (props: ProductCheckoutProps) => {
     return (
         <div>
             <div className="border-b border-solid border-stone-400 ml-5">
+                {!carts.length && (
+                    <p className="text-base font-bold">
+                        Không có sản phẩm trong giỏ hàng
+                    </p>
+                )}
                 {carts.map((cart, i) => (
                     <div
                         key={i}

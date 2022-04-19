@@ -1,8 +1,10 @@
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 import API from "../../api";
 import { SearchBody } from "../../api/interface";
 import { Type, TypeProduct } from "../../api/repository/typeAPI";
+import BreadcrumbComponent from "../../components/Breadcrumb";
 import Footer from "../../components/common/footer";
 import Header from "../../components/common/header";
 import Sider from "../../components/common/sider";
@@ -26,9 +28,28 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
             utils.toUrl(`${route.SHOP}/${type?.slug}`, { ...query, page })
         );
     };
+
+    const breadcrumb = useMemo(() => {
+        return [
+            {
+                name: "SẢN PHẨM",
+                link: route.PRODUCT,
+            },
+            {
+                name: "SHOP",
+                link: route.SHOP,
+            },
+            {
+                name: type?.name ?? "",
+                link: route.SHOP + "/" + type?.slug ?? "",
+            },
+        ];
+    }, [type?.name, type?.slug]);
+
     return (
         <>
             <Header types={types ?? []} />
+            <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex _shops">
                 <div className="_left">
                     <Sider types={types ?? []} />
@@ -45,13 +66,7 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
                         )}
                     </div>
                 </div>
-                {/* <button>
-                    <Link href={`${route.SHOP}?sort=-sold&page=2&limit=6`}>
-                        <a>aaaaaa</a>
-                    </Link>
-                </button> */}
             </div>
-
             <Footer />
         </>
     );

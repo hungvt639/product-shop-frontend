@@ -1,7 +1,9 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { useMemo } from "react";
 import API from "../../api";
 import { Type, TypeProduct } from "../../api/repository/typeAPI";
+import BreadcrumbComponent from "../../components/Breadcrumb";
 import Footer from "../../components/common/footer";
 import Header from "../../components/common/header";
 import Sider from "../../components/common/sider";
@@ -17,11 +19,19 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
     products,
     types,
 }) => {
-    console.log("p", products);
+    const breadcrumb = useMemo(() => {
+        return [
+            {
+                name: "SẢN PHẨM",
+                link: route.PRODUCT,
+            },
+        ];
+    }, []);
 
     return (
         <>
-            <Header types={types ?? []} />
+            <Header types={types ?? []} />{" "}
+            <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex _shops">
                 <div className="_left">
                     <Sider types={types ?? []} />

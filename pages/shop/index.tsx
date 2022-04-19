@@ -1,9 +1,11 @@
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 import API from "../../api";
 import { Pagination, SearchBody } from "../../api/interface";
 import { Product } from "../../api/repository/productAPI";
 import { Type } from "../../api/repository/typeAPI";
+import BreadcrumbComponent from "../../components/Breadcrumb";
 import Footer from "../../components/common/footer";
 import Header from "../../components/common/header";
 import Sider from "../../components/common/sider";
@@ -21,10 +23,22 @@ const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
     const onPageChange = (page: number) => {
         router.push(utils.toUrl(route.SHOP, { ...query, page }));
     };
-
+    const breadcrumb = useMemo(() => {
+        return [
+            {
+                name: "SẢN PHẨM",
+                link: route.PRODUCT,
+            },
+            {
+                name: "SHOP",
+                link: route.SHOP,
+            },
+        ];
+    }, []);
     return (
         <>
             <Header types={types ?? []} />
+            <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex _shops">
                 <div className="_left">
                     <Sider types={types ?? []} />

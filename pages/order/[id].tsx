@@ -11,6 +11,7 @@ import Header from "../../components/common/header";
 import route from "../../config/route";
 import { Image, Steps, Tag } from "antd";
 import utils from "../../utils";
+import { useMemo } from "react";
 const { Step } = Steps;
 
 type OrderProps = {
@@ -20,7 +21,6 @@ type OrderProps = {
 
 const OrderDetailComponent: NextPage<OrderProps> = (props) => {
     const { order, types } = props;
-    console.log("order", order);
 
     return (
         <>
@@ -30,6 +30,10 @@ const OrderDetailComponent: NextPage<OrderProps> = (props) => {
                     <h1 className="text-center font-extrabold text-2xl">
                         Đơn hàng của bạn
                     </h1>
+                    <h2 className="text-center text-sm font-semibold mt-2">
+                        Thường xuyên kiểm tra email của bạn, chúng tôi sẽ gửi
+                        thông tin đơn hàng khi có cập nhật
+                    </h2>
                     <p className="text-center mt-2">
                         Mã đơn <span className="font-bold">{order._id}</span>
                     </p>
@@ -74,10 +78,6 @@ const OrderDetailComponent: NextPage<OrderProps> = (props) => {
                                     <div className="flex">
                                         <div>
                                             <div className="w-20 h-20">
-                                                {/* <img
-                                                    src={cart.product.img}
-                                                    alt="img"
-                                                /> */}
                                                 <Image
                                                     src={cart.product.img}
                                                     alt="img"
@@ -198,7 +198,7 @@ const OrderDetailComponent: NextPage<OrderProps> = (props) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <Link href={route.HOME}>
+                                    <Link href={route.PRODUCT}>
                                         <a>
                                             <div className="flex justify-center items-end text-neutral-400 mt-3">
                                                 <IoReturnUpBackOutline className="text-2xl" />

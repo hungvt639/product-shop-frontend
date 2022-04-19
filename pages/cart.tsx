@@ -7,25 +7,31 @@ import { Type } from "../api/repository/typeAPI";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
 import route from "../config/route";
-import useCheckout from "../hooks/useCheckout";
 import { AppState } from "../store";
-import { BsChevronRight } from "react-icons/bs";
-import ProductCheckout from "../components/ProductCheckout";
-import ShipmentDetails from "../components/ShipmentDetails";
-import PaymentMethods from "../components/PaymentMethods";
 import utils from "../utils";
 import useCart from "../hooks/useCart";
 import { IoReturnUpBackOutline } from "react-icons/io5";
+import BreadcrumbComponent from "../components/Breadcrumb";
+import { useMemo } from "react";
+
 type CartProps = {
     types?: Type[];
 };
 const CartComponentComponent: NextPage<CartProps> = ({ types }) => {
     const carts = useSelector((s: AppState) => s.cart);
     const { reomteInCart, changeAmount } = useCart();
-
+    const breadcrumb = useMemo(() => {
+        return [
+            {
+                name: "GIỎ HÀNG",
+                link: route.CART,
+            },
+        ];
+    }, []);
     return (
         <>
             <Header types={types ?? []} />
+            <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width _cart">
                 <h1 className="text-center font-extrabold text-2xl">
                     Giỏ hàng của bạn
@@ -38,6 +44,11 @@ const CartComponentComponent: NextPage<CartProps> = ({ types }) => {
                 </div>
                 <div className="flex">
                     <div className="_left mb-10 mr-5">
+                        {!carts.length && (
+                            <p className="text-base font-bold flex justify-center items-center flex-1 h-full">
+                                Vui lòng quay lại SHOP để lựa chọn sản phẩm
+                            </p>
+                        )}
                         {carts.map((cart, i) => (
                             <div
                                 className="mt-5 pb-5 border-b border-dotted relative"
@@ -155,15 +166,21 @@ const CartComponentComponent: NextPage<CartProps> = ({ types }) => {
                                     Phí vận chuyển sẽ được tính ở trang thanh
                                     toán.
                                 </p>
-                                <Link href={route.CHECKOUT}>
-                                    <a>
-                                        <button className="w-full bg-red-600 text-white rounded border-red-600 py-2">
-                                            THANH TOÁN
-                                        </button>
-                                    </a>
-                                </Link>
+                                {carts.length ? (
+                                    <Link href={route.CHECKOUT}>
+                                        <a>
+                                            <button className="w-full bg-red-600 text-white rounded border-red-600 py-2">
+                                                THANH TOÁN
+                                            </button>
+                                        </a>
+                                    </Link>
+                                ) : (
+                                    <button className="w-full bg-stone-600 text-white rounded stone-red-600 py-2">
+                                        KHÔNG THỂ THANH TOÁN
+                                    </button>
+                                )}
 
-                                <Link href={route.HOME}>
+                                <Link href={route.PRODUCT}>
                                     <a>
                                         <div className="flex justify-center items-end text-neutral-400 mt-3">
                                             <IoReturnUpBackOutline className="text-2xl" />

@@ -1,6 +1,9 @@
 import Link from "next/link";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
+import { useSelector } from "react-redux";
 import route from "../config/route";
+import notify from "../container/notify";
+import { AppState } from "../store";
 
 type ShipmentDetailsProps = {
     values: {
@@ -28,6 +31,9 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
         address: false,
         phone: false,
     });
+
+    const carts = useSelector((s: AppState) => s.cart);
+
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setVali({
@@ -36,7 +42,11 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
             address: !values.address,
         });
         if (values.fullname && values.phone && values.address) {
-            setCheckout(1);
+            if (carts.length) {
+                setCheckout(1);
+            } else {
+                notify.error("Giỏ hàng trống, không thể thanh toán");
+            }
         }
     };
     return (
@@ -124,14 +134,18 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
 
             <div className="flex justify-between items-center">
                 <Link href={route.CART}>
-                    <a>Giỏ hàng</a>
+                    <a className="text-base font-bold text-sky-600">Giỏ hàng</a>
                 </Link>
-                <button
-                    className="px-10 py-4 rounded text-white bg-sky-600"
-                    type="submit"
-                >
-                    Phương thức thanh toán
-                </button>
+                {carts.length ? (
+                    <button
+                        className="px-10 py-4 rounded text-white bg-sky-600"
+                        type="submit"
+                    >
+                        Phương thức thanh toán
+                    </button>
+                ) : (
+                    <Fragment />
+                )}
             </div>
         </form>
     );
