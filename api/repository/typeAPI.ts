@@ -10,8 +10,12 @@ class TypeAPI {
     public gets = (): Promise<AxiosResponse<Type[]>> => {
         return AxiosAPI(true).get(`${this.resource}`);
     };
-    public getProduct = (): Promise<AxiosResponse<TypeProduct[]>> => {
-        return AxiosAPI(true).get(`${this.resource}`);
+    public getsProduct = (
+        obj?: SearchBody
+    ): Promise<AxiosResponse<TypeProduct[]>> => {
+        const str = utils.objToSearch(obj);
+
+        return AxiosAPI(true).get(`${this.resource}/get-product${str}`);
     };
     public get = (
         slug: string,

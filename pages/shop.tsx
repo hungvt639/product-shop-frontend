@@ -1,5 +1,4 @@
 import { NextPage, NextPageContext } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import API from "../api";
 import { Pagination, SearchBody } from "../api/interface";
@@ -7,6 +6,7 @@ import { Product } from "../api/repository/productAPI";
 import { Type } from "../api/repository/typeAPI";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
+import Sider from "../components/common/sider";
 import ListItems from "../components/ListItems";
 import PaginationCpn from "../components/Pagination";
 import route from "../config/route";
@@ -27,13 +27,7 @@ const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
             <Header types={types ?? []} />
             <div className="_max-width flex _shops">
                 <div className="_left">
-                    {types?.map((t) => (
-                        <div key={t._id}>
-                            <Link href={`${route.SHOP}/${t.slug}`}>
-                                <a>{t.name}</a>
-                            </Link>
-                        </div>
-                    ))}
+                    <Sider types={types ?? []} />
                 </div>
                 <div className="_right">
                     <div className="flex px-5">
@@ -50,11 +44,6 @@ const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
                         )}
                     </div>
                 </div>
-                {/* <button>
-                    <Link href={`${route.SHOP}?sort=-sold&page=2&limit=6`}>
-                        <a>aaaaaa</a>
-                    </Link>
-                </button> */}
             </div>
             <Footer />
         </>

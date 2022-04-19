@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { Menu } from "antd";
 import Link from "next/link";
 import route from "../../../config/route";
 import Logo from "../../../public/img/logo.png";
@@ -10,13 +9,12 @@ import Image from "next/image";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import Dropdown from "../../../container/Dropdown";
 import { Type } from "../../../api/repository/typeAPI";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import Search from "./Search";
 import _env from "../../../config/_env";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../store";
 import CartBase from "./CartBase";
-import useCart from "../../../hooks/useCart";
 
 const infos = [
     {
@@ -64,11 +62,15 @@ const Header = (props: HeaderProps) => {
             <div className="_max-width w-full flex flex-col">
                 <div className="flex w-full pr-5">
                     <div className="_image-logo">
-                        <Image
-                            className="w-full h-full"
-                            src={Logo}
-                            alt="Logo"
-                        />
+                        <Link href={route.HOME}>
+                            <a>
+                                <Image
+                                    className="w-full h-full"
+                                    src={Logo}
+                                    alt="Logo"
+                                />
+                            </a>
+                        </Link>
                     </div>
                     <div className="flex flex-row flex-3">
                         {infos.map((info) => (
@@ -119,7 +121,10 @@ const Header = (props: HeaderProps) => {
                 <div className="flex w-full mt-5">
                     <div className="flex items-center">
                         <div className="mr-5">
-                            <Link href={route.HOME}>HOME</Link>
+                            <Link href={route.HOME}>TRANG CHỦ</Link>
+                        </div>
+                        <div className="mr-5">
+                            <Link href={route.PRODUCT}>SẢN PHẨM</Link>
                         </div>
                         <div>
                             <Dropdown overlay={menu}>

@@ -263,3 +263,20 @@
         }
     }
 }
+._order {
+    ._left {
+        width: 60%;
+    }
+    ._right {
+        width: 40%;
+    }
+    ._amount {
+        button {
+            padding: 0 15px;
+        }
+        input {
+            width: 50px;
+            padding: 5px 10px;
+        }
+    }
+}

@@ -5,6 +5,7 @@ import { SearchBody } from "../../api/interface";
 import { Type, TypeProduct } from "../../api/repository/typeAPI";
 import Footer from "../../components/common/footer";
 import Header from "../../components/common/header";
+import Sider from "../../components/common/sider";
 import ListItems from "../../components/ListItems";
 import Pagination from "../../components/Pagination";
 import route from "../../config/route";
@@ -28,18 +29,29 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
     return (
         <>
             <Header types={types ?? []} />
-            <div className="_max-width">
-                <h1 className="px-5 text-2xl font-bold">{type?.name}</h1>
-                <div>{type && <ListItems items={type.product.docs} />}</div>
-                <div className="flex justify-center">
-                    {type && (
-                        <Pagination
-                            onPageChange={onPageChange}
-                            data={type.product}
-                        />
-                    )}
+            <div className="_max-width flex _shops">
+                <div className="_left">
+                    <Sider types={types ?? []} />
                 </div>
+                <div className="_right">
+                    <h1 className="px-5 text-2xl font-bold">{type?.name}</h1>
+                    <div>{type && <ListItems items={type.product.docs} />}</div>
+                    <div className="flex justify-center">
+                        {type && (
+                            <Pagination
+                                onPageChange={onPageChange}
+                                data={type.product}
+                            />
+                        )}
+                    </div>
+                </div>
+                {/* <button>
+                    <Link href={`${route.SHOP}?sort=-sold&page=2&limit=6`}>
+                        <a>aaaaaa</a>
+                    </Link>
+                </button> */}
             </div>
+
             <Footer />
         </>
     );

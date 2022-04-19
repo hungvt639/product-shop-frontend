@@ -15,7 +15,6 @@ import ShipmentDetails from "../components/ShipmentDetails";
 import PaymentMethods from "../components/PaymentMethods";
 import utils from "../utils";
 import useCart from "../hooks/useCart";
-import useProduct from "../hooks/useProduct";
 import { IoReturnUpBackOutline } from "react-icons/io5";
 type CartProps = {
     types?: Type[];

@@ -24,9 +24,7 @@ const ItemComponent = (props: ItemProps) => {
                         <h3 className="text-lg font-semibold mt-5">
                             {item.name}
                         </h3>
-                        <p className="mb-5">
-                            {item.price.toLocaleString("vi-VN")}₫
-                        </p>
+                        <p>{item.price.toLocaleString("vi-VN")}₫</p>
                     </div>
                 </a>
             </Link>
