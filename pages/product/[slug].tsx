@@ -16,10 +16,12 @@ import useProduct from "../../hooks/useProduct";
 type ProductProps = {
     product?: Product;
     types?: Type[];
+    pathname: string;
+    asPath?: string;
 };
 
 const ProductDetailComponent: NextPage<ProductProps> = (props) => {
-    const { product, types } = props;
+    const { product, types, pathname, asPath } = props;
 
     const { setSize, size, color, setColor, amount, changeAmount, addToCart } =
         useProduct(product);
@@ -50,7 +52,7 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
             <Head>
                 <title>{product?.name}</title>
             </Head>
-            <Header types={types ?? []} />
+            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             <Breadcrumb data={breadcrumb} />
             {product && (
                 <div className="_product  _max-width">
@@ -112,6 +114,7 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
                             <div className="py-2">
                                 <div className="flex _amount">
                                     <button
+                                        className="hover:bg-slate-400 hover:text-white hover:border-slate-400"
                                         onClick={() => changeAmount(amount - 1)}
                                     >
                                         -
@@ -126,6 +129,7 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
                                         }
                                     />
                                     <button
+                                        className="hover:bg-slate-400 hover:text-white hover:border-slate-400"
                                         onClick={() => changeAmount(amount + 1)}
                                     >
                                         +
@@ -133,7 +137,7 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
                                 </div>
                                 <button
                                     onClick={() => addToCart(product)}
-                                    className="_add-cart mt-7 text-white py-3 px-24"
+                                    className="_add-cart mt-7 text-white py-3 px-24 hover:bg-slate-400"
                                 >
                                     THÊM VÀO GIỎ
                                 </button>
@@ -164,15 +168,19 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
         </>
     );
 };
-ProductDetailComponent.getInitialProps = async ({ query }: NextPageContext) => {
+ProductDetailComponent.getInitialProps = async ({
+    query,
+    pathname,
+    asPath,
+}: NextPageContext) => {
     try {
         const data = await Promise.all([
             await API.product.getProduct(query.slug as string),
             await API.type.gets(),
         ]);
-        return { product: data[0].data, types: data[1].data };
+        return { product: data[0].data, types: data[1].data, pathname, asPath };
     } catch {
-        return {};
+        return { pathname, asPath };
     }
 };
 export default ProductDetailComponent;

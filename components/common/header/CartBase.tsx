@@ -82,7 +82,7 @@ const CartBase = (props: CartBaseProps) => {
                 <div className="w-1/2 pr-3">
                     <Link href={route.CART}>
                         <a>
-                            <button className="w-full py-2 rounded-sm text-white">
+                            <button className="w-full py-2 rounded-sm text-white hover:bg-stone-400">
                                 XEM GIỎ HÀNG
                             </button>
                         </a>
@@ -91,7 +91,7 @@ const CartBase = (props: CartBaseProps) => {
                 <div className="w-1/2 pl-3">
                     <Link href={route.CHECKOUT}>
                         <a>
-                            <button className="w-full  py-2 rounded-sm text-white">
+                            <button className="w-full  py-2 rounded-sm text-white hover:bg-stone-400">
                                 THANH TOÁN
                             </button>
                         </a>

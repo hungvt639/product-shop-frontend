@@ -30,9 +30,9 @@ class Utils {
         return carts.reduce((sum, cart) => sum + cart.amount, 0);
     };
 
-    public setItemStorage = (key: string, value: any) => {
-        localStorage.setItem(key, JSON.stringify(value));
-    };
+    // public setItemStorage = (key: string, value: any) => {
+    //     localStorage.setItem(key, JSON.stringify(value));
+    // };
 
     public status = [
         { label: "Chờ xác nhận", color: "green" },

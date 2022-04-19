@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { NextPage } from "next";
+import { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -18,8 +18,14 @@ import utils from "../utils";
 
 type CartProps = {
     types?: Type[];
+    pathname: string;
+    asPath?: string;
 };
-const CartComponentComponent: NextPage<CartProps> = ({ types }) => {
+const CartComponentComponent: NextPage<CartProps> = ({
+    types,
+    pathname,
+    asPath,
+}) => {
     const carts = useSelector((s: AppState) => s.cart);
     const { reomteInCart, changeAmount } = useCart();
     const breadcrumb = useMemo(() => {
@@ -35,7 +41,7 @@ const CartComponentComponent: NextPage<CartProps> = ({ types }) => {
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} />
+            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width _cart">
                 <h1 className="text-center font-extrabold text-2xl">
@@ -205,12 +211,15 @@ const CartComponentComponent: NextPage<CartProps> = ({ types }) => {
     );
 };
 
-CartComponentComponent.getInitialProps = async () => {
+CartComponentComponent.getInitialProps = async ({
+    pathname,
+    asPath,
+}: NextPageContext) => {
     try {
         const res = await API.type.gets();
-        return { types: res.data };
+        return { types: res.data, pathname, asPath };
     } catch {
-        return {};
+        return { pathname, asPath };
     }
 };
 

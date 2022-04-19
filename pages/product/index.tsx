@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -15,11 +15,15 @@ import _env from "../../config/_env";
 type ProductComponentProps = {
     products: TypeProduct[];
     types?: Type[];
+    pathname: string;
+    asPath?: string;
 };
 
 const ProductComponent: NextPage<ProductComponentProps> = ({
     products,
     types,
+    pathname,
+    asPath,
 }) => {
     const breadcrumb = useMemo(() => {
         return [
@@ -35,11 +39,11 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} />{" "}
+            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex _shops">
                 <div className="_left">
-                    <Sider types={types ?? []} />
+                    <Sider types={types ?? []} asPath={asPath} />
                 </div>
                 <div className="_right">
                     <div>
@@ -57,7 +61,7 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
                                 <div className="flex justify-center">
                                     <Link href={`${route.SHOP}/${ps.slug}`}>
                                         <a>
-                                            <button className="mb-10 px-5 rounded-sm text-white bg-stone-600">
+                                            <button className="mb-10 px-5 rounded-sm text-white bg-zinc-900">
                                                 XEM THÊM ...
                                             </button>
                                         </a>
@@ -73,7 +77,10 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
     );
 };
 export default ProductComponent;
-ProductComponent.getInitialProps = async () => {
+ProductComponent.getInitialProps = async ({
+    pathname,
+    asPath,
+}: NextPageContext) => {
     try {
         const data = await Promise.all([
             await API.type.getsProduct({
@@ -86,8 +93,10 @@ ProductComponent.getInitialProps = async () => {
         return {
             products: data[0].data,
             types: data[1].data,
+            pathname,
+            asPath,
         };
     } catch {
-        return { products: [] };
+        return { products: [], pathname, asPath };
     }
 };

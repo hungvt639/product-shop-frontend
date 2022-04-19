@@ -16,7 +16,6 @@ const useSearch = () => {
                 setTimeout(async () => {
                     const res = await API.product.search({ search: value });
                     console.log("SearchResponse", res.data);
-
                     setSearchRes(res.data);
                 }, delay)
             );

@@ -21,8 +21,16 @@ type ShopProps = {
     products?: Pagination<Product>;
     types?: Type[];
     query?: SearchBody;
+    pathname: string;
+    asPath?: string;
 };
-const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
+const ShopComponent: NextPage<ShopProps> = ({
+    products,
+    types,
+    query,
+    pathname,
+    asPath,
+}) => {
     const router = useRouter();
 
     const breadcrumb = useMemo(() => {
@@ -46,15 +54,15 @@ const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
     };
     return (
         <>
-            <Header types={types ?? []} />
+            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex _shops">
                 <div className="_left">
-                    <Sider types={types ?? []} />
+                    <Sider types={types ?? []} asPath={asPath} />
                 </div>
                 <div className="_right">
                     <div className="flex px-5 justify-between">
-                        <h1>BEST SELLER</h1>
+                        <h1 className="text-xl font-bold">/ BEST SELLER /</h1>
                         <Select
                             className="_select-ant"
                             placeholder="Lọc"
@@ -85,20 +93,28 @@ const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
     );
 };
 
-ShopComponent.getInitialProps = async ({ query }: NextPageContext) => {
+ShopComponent.getInitialProps = async ({
+    query,
+    pathname,
+    asPath,
+}: NextPageContext) => {
     try {
         const data = await Promise.all([
             await API.product.gets({
                 select: "_id name slug sold price img img1 isSale",
-                sort: query.sort as string,
-                limit: query.limit as string,
-                page: query.page as string,
+                ...query,
             }),
             await API.type.gets(),
         ]);
-        return { products: data[0].data, types: data[1].data, query };
+        return {
+            products: data[0].data,
+            types: data[1].data,
+            query,
+            pathname,
+            asPath,
+        };
     } catch {
-        return {};
+        return { pathname, asPath };
     }
 };
 

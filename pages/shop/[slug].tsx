@@ -18,12 +18,16 @@ type TypeProductProps = {
     type?: TypeProduct;
     types?: Type[];
     query?: SearchBody;
+    pathname: string;
+    asPath?: string;
 };
 
 const TypeProductComponent: NextPage<TypeProductProps> = ({
     type,
     types,
     query,
+    pathname,
+    asPath,
 }) => {
     const router = useRouter();
 
@@ -55,11 +59,11 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
             <Head>
                 <title>{type?.name}</title>
             </Head>
-            <Header types={types ?? []} />
+            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex _shops">
                 <div className="_left">
-                    <Sider types={types ?? []} />
+                    <Sider types={types ?? []} asPath={asPath} />
                 </div>
                 <div className="_right">
                     <h1 className="px-5 text-2xl font-bold">{type?.name}</h1>
@@ -79,7 +83,11 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
     );
 };
 
-TypeProductComponent.getInitialProps = async ({ query }: NextPageContext) => {
+TypeProductComponent.getInitialProps = async ({
+    query,
+    pathname,
+    asPath,
+}: NextPageContext) => {
     try {
         const data = await Promise.all([
             await API.type.get(query.slug as string, {
@@ -88,9 +96,15 @@ TypeProductComponent.getInitialProps = async ({ query }: NextPageContext) => {
             }),
             await API.type.gets(),
         ]);
-        return { type: data[0].data, types: data[1].data, query };
+        return {
+            type: data[0].data,
+            types: data[1].data,
+            query,
+            pathname,
+            asPath,
+        };
     } catch {
-        return {};
+        return { pathname, asPath };
     }
 };
 

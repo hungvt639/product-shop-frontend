@@ -19,17 +19,19 @@ const { Step } = Steps;
 type OrderProps = {
     order?: Order;
     types?: Type[];
+    pathname: string;
+    asPath?: string;
 };
 
 const OrderDetailComponent: NextPage<OrderProps> = (props) => {
-    const { order, types } = props;
+    const { order, types, pathname, asPath } = props;
 
     return (
         <>
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} />
+            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             {order && (
                 <div className="_max-width _order">
                     <h1 className="text-center font-extrabold text-2xl">
@@ -224,15 +226,21 @@ const OrderDetailComponent: NextPage<OrderProps> = (props) => {
         </>
     );
 };
-OrderDetailComponent.getInitialProps = async ({ query }: NextPageContext) => {
+
+OrderDetailComponent.getInitialProps = async ({
+    query,
+    pathname,
+    asPath,
+}: NextPageContext) => {
     try {
         const data = await Promise.all([
             await API.order.get(query.id as string),
             await API.type.gets(),
         ]);
-        return { order: data[0].data, types: data[1].data };
+        return { order: data[0].data, types: data[1].data, pathname, asPath };
     } catch {
-        return {};
+        return { pathname, asPath };
     }
 };
+
 export default OrderDetailComponent;

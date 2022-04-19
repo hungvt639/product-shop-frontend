@@ -36,16 +36,22 @@ const infos = [
 
 type HeaderProps = {
     types: Type[];
+    pathname: string;
+    asPath?: string;
 };
 const Header = (props: HeaderProps) => {
     const carts = useSelector((s: AppState) => s.cart);
-    const { types } = props;
+    const { types, pathname, asPath } = props;
     const menu = useMemo(() => {
         return (
             <div className="flex flex-col border-t-2 border-solid border-gray-500 bg-white">
                 {types.map((type) => (
                     <div
-                        className="px-5 py-2 text-base border-t border-solid border-gray-500"
+                        className={`px-5 py-2 text-base border-t border-solid border-gray-300${
+                            asPath?.startsWith(route.SHOP + "/" + type.slug)
+                                ? " bg-stone-100"
+                                : ""
+                        }`}
                         key={type._id}
                     >
                         <Link href={`${route.SHOP}/${type.slug}`}>
@@ -55,7 +61,7 @@ const Header = (props: HeaderProps) => {
                 ))}
             </div>
         );
-    }, [types]);
+    }, [asPath, types]);
 
     return (
         <header className="w-full _header py-5">
@@ -104,7 +110,7 @@ const Header = (props: HeaderProps) => {
                         >
                             <Link href={route.CART}>
                                 <a>
-                                    <div className="flex items-center text-14 font-semibold cursor-pointer">
+                                    <div className="_cart-btn flex items-center text-14 font-semibold cursor-pointer">
                                         <div className="_cart-icon mr-2">
                                             <AiOutlineShoppingCart />
                                             <div className="_cart-number">
@@ -120,13 +126,31 @@ const Header = (props: HeaderProps) => {
                 </div>
                 <div className="flex w-full mt-5">
                     <div className="flex items-center">
-                        <div className="mr-5">
+                        <div
+                            className={`text-base font-semibold mr-5${
+                                pathname === route.HOME
+                                    ? " border-b-4  border-stone-700"
+                                    : ""
+                            }`}
+                        >
                             <Link href={route.HOME}>TRANG CHỦ</Link>
                         </div>
-                        <div className="mr-5">
+                        <div
+                            className={`text-base font-semibold mr-5${
+                                pathname === route.PRODUCT
+                                    ? " border-b-4 border-stone-700"
+                                    : ""
+                            }`}
+                        >
                             <Link href={route.PRODUCT}>SẢN PHẨM</Link>
                         </div>
-                        <div>
+                        <div
+                            className={`text-base font-semibold${
+                                pathname.startsWith(route.SHOP)
+                                    ? " border-b-4 border-stone-700"
+                                    : ""
+                            }`}
+                        >
                             <Dropdown overlay={menu}>
                                 <Link href={route.SHOP}>SHOP</Link>
                             </Dropdown>

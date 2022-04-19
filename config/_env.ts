@@ -4,6 +4,7 @@ const _env = {
     PHONE_NUMBER: "0123456789",
     EMAIL: "abcxyz@gmail.com",
     SHOP_NAME: "Shop Uyn",
+    CARTS_KEY: "carts",
 };
 
 export default _env;

@@ -1,10 +1,9 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import action from "../store/actions";
 
 const useCart = () => {
     const dispatch = useDispatch();
-    // const carts = useSelector((s: AppState) => s.cart);
     const reomteInCart = useCallback(
         (index: number) => {
             dispatch(action.removeIndex(index));
@@ -19,26 +18,11 @@ const useCart = () => {
         [dispatch]
     );
     // useEffect(() => {
-    //     if (typeof window !== "undefined") {
-    //         console.log("it", localStorage.getItem("carts") ?? "[]");
-
-    //         // dispatch(
-    //         //     action.setCart(
-    //         //         JSON.parse(localStorage.getItem("carts") ?? "[]")
-    //         //     )
-    //         // );
-    //     }
+    //     dispatch(
+    //         action.setCart(JSON.parse(localStorage.getItem("carts") ?? "[]"))
+    //     );
     // }, [dispatch]);
-    // useEffect(() => {
-    //     const cs = carts.map((c) => {
-    //         const { _id, img, price, name, slug, type, isSale } = c.product;
-    //         return {
-    //             ...c,
-    //             product: { _id, img, price, name, slug, type, isSale },
-    //         };
-    //     });
-    //     utils.setItemStorage("carts", cs);
-    // }, [carts]);
+
     return { reomteInCart, changeAmount };
 };
 export default useCart;

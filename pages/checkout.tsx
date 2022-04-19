@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { BsChevronRight } from "react-icons/bs";
@@ -17,9 +17,15 @@ import { AppState } from "../store";
 
 type CheckoutProps = {
     types?: Type[];
+    pathname: string;
+    asPath?: string;
 };
 
-const CheckoutComponent: NextPage<CheckoutProps> = ({ types }) => {
+const CheckoutComponent: NextPage<CheckoutProps> = ({
+    types,
+    pathname,
+    asPath,
+}) => {
     const carts = useSelector((s: AppState) => s.cart);
 
     const {
@@ -37,7 +43,7 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({ types }) => {
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} />
+            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             <div className="_max-width flex items-center text-base">
                 <Link href={route.CART}>
                     <a className="mr-2 text-blue-600">Giỏ hàng</a>
@@ -93,12 +99,15 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({ types }) => {
     );
 };
 
-CheckoutComponent.getInitialProps = async () => {
+CheckoutComponent.getInitialProps = async ({
+    pathname,
+    asPath,
+}: NextPageContext) => {
     try {
         const res = await API.type.gets();
-        return { types: res.data };
+        return { types: res.data, pathname, asPath };
     } catch {
-        return {};
+        return { pathname, asPath };
     }
 };
 

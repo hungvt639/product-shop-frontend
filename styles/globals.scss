@@ -25,6 +25,13 @@
         max-width: 300px;
         max-height: 70px;
     }
+    ._cart-btn {
+        &:hover {
+            ._cart-number {
+                background-color: #40a9ff;
+            }
+        }
+    }
     ._cart-icon {
         // width: 30px;
         // height: 30px;

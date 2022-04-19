@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import type { NextPage } from "next";
+import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import API from "../api";
@@ -18,19 +18,23 @@ type HomeProps = {
     carousels?: Carousel[];
     products?: Pagination<Product>;
     types?: Type[];
+    pathname: string;
+    asPath?: string;
 };
 
 const HomeComponent: NextPage<HomeProps> = ({
     carousels,
     products,
     types,
+    pathname,
+    asPath,
 }: HomeProps) => {
     return (
         <>
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} />
+            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             <CarouselComponent carousels={carousels ?? []} />
             <h1 className="text-center text-4xl font-bold my-9">
                 <Link href={`${route.SHOP}?sort=-sold&page=1&limit=20`}>
@@ -48,7 +52,10 @@ const HomeComponent: NextPage<HomeProps> = ({
 
 export default HomeComponent;
 
-HomeComponent.getInitialProps = async () => {
+HomeComponent.getInitialProps = async ({
+    pathname,
+    asPath,
+}: NextPageContext) => {
     try {
         const data = await Promise.all([
             await API.product.gets({
@@ -62,8 +69,10 @@ HomeComponent.getInitialProps = async () => {
             carousels: data[1].data,
             products: data[0].data,
             types: data[2].data,
+            pathname,
+            asPath,
         };
     } catch {
-        return {};
+        return { pathname, asPath };
     }
 };
