@@ -1,16 +1,16 @@
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
-import API from "../api";
-import { Pagination, SearchBody } from "../api/interface";
-import { Product } from "../api/repository/productAPI";
-import { Type } from "../api/repository/typeAPI";
-import Footer from "../components/common/footer";
-import Header from "../components/common/header";
-import Sider from "../components/common/sider";
-import ListItems from "../components/ListItems";
-import PaginationCpn from "../components/Pagination";
-import route from "../config/route";
-import utils from "../utils";
+import API from "../../api";
+import { Pagination, SearchBody } from "../../api/interface";
+import { Product } from "../../api/repository/productAPI";
+import { Type } from "../../api/repository/typeAPI";
+import Footer from "../../components/common/footer";
+import Header from "../../components/common/header";
+import Sider from "../../components/common/sider";
+import ListItems from "../../components/ListItems";
+import PaginationCpn from "../../components/Pagination";
+import route from "../../config/route";
+import utils from "../../utils";
 type ShopProps = {
     products?: Pagination<Product>;
     types?: Type[];
