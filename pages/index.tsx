@@ -1,0 +1,64 @@
+/* eslint-disable @next/next/no-img-element */
+import type { NextPage } from "next";
+import API from "../api";
+import { Carousel } from "../api/repository/carouselAPI";
+import { Product } from "../api/repository/productAPI";
+import Footer from "../components/common/footer";
+import Header from "../components/common/header";
+import { Type } from "../api/repository/typeAPI";
+import CarouselComponent from "../components/Carousel";
+import ListItems from "../components/ListItems";
+import { Pagination } from "../api/interface";
+import Link from "next/link";
+import route from "../config/route";
+
+type HomeProps = {
+    carousels?: Carousel[];
+    products?: Pagination<Product>;
+    types?: Type[];
+};
+
+const HomeComponent: NextPage<HomeProps> = ({
+    carousels,
+    products,
+    types,
+}: HomeProps) => {
+    return (
+        <>
+            <Header types={types ?? []} />
+            <CarouselComponent carousels={carousels ?? []} />
+            <h1 className="text-center text-4xl font-bold my-9">
+                <Link href={`${route.SHOP}?sort=-sold&page=1&limit=20`}>
+                    <a>/ BEST SELLER /</a>
+                </Link>
+            </h1>
+            <div className="_max-width">
+                {products && <ListItems items={products.docs} />}
+            </div>
+
+            <Footer />
+        </>
+    );
+};
+
+export default HomeComponent;
+
+HomeComponent.getInitialProps = async () => {
+    try {
+        const data = await Promise.all([
+            await API.product.gets({
+                select: "_id name slug sold price img img1 isSale",
+            }),
+            await API.carousel.get(),
+            await API.type.gets(),
+        ]);
+
+        return {
+            carousels: data[1].data,
+            products: data[0].data,
+            types: data[2].data,
+        };
+    } catch {
+        return {};
+    }
+};

@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: Quicksand;
+    src: url(./Quicksand-VariableFont_wght.ttf);
+}
+body {
+    font-family: "Quicksand", sans-serif !important;
+}
+p {
+    margin: 0;
+    margin-bottom: 0;
+}
+.w-25px {
+    width: 25px;
+}
+.h-25px {
+    height: 25px;
+}
+.text-12px {
+    font-size: 12px;
+}
+.text-14px {
+    font-size: 14px;
+}
+.flex-3 {
+    flex: 3;
+}
+._max-width {
+    max-width: 1620px;
+    /* margin: 0 auto; */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+input {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #b5bdbd;
+    color: #000;
+    background-color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+}
+input:active,
+input:focus {
+    box-shadow: 0 0 5px #ccc;
+    opacity: 1 !important;
+    outline: none;
+    color: #333;
+    background-color: #fff;
+}
+button {
+    border: 1px solid #b5bdbd;
+    text-align: center;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #b5bdbd;
+    cursor: pointer;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+.dangerouslySetInnerHTML p {
+    margin-bottom: 7px;
+}

@@ -1,0 +1,81 @@
+import { NextPage, NextPageContext } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import API from "../api";
+import { Pagination, SearchBody } from "../api/interface";
+import { Product } from "../api/repository/productAPI";
+import { Type } from "../api/repository/typeAPI";
+import Footer from "../components/common/footer";
+import Header from "../components/common/header";
+import ListItems from "../components/ListItems";
+import PaginationCpn from "../components/Pagination";
+import route from "../config/route";
+import utils from "../utils";
+type ShopProps = {
+    products?: Pagination<Product>;
+    types?: Type[];
+    query?: SearchBody;
+};
+const ShopComponent: NextPage<ShopProps> = ({ products, types, query }) => {
+    const router = useRouter();
+    const onPageChange = (page: number) => {
+        router.push(utils.toUrl(route.SHOP, { ...query, page }));
+    };
+
+    return (
+        <>
+            <Header types={types ?? []} />
+            <div className="_max-width flex _shops">
+                <div className="_left">
+                    {types?.map((t) => (
+                        <div key={t._id}>
+                            <Link href={`${route.SHOP}/${t.slug}`}>
+                                <a>{t.name}</a>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+                <div className="_right">
+                    <div className="flex px-5">
+                        <h1>BEST SELLER</h1>
+                        <div>Input</div>
+                    </div>
+                    <div>{products && <ListItems items={products.docs} />}</div>
+                    <div className="flex justify-center">
+                        {products && (
+                            <PaginationCpn
+                                onPageChange={onPageChange}
+                                data={products}
+                            />
+                        )}
+                    </div>
+                </div>
+                {/* <button>
+                    <Link href={`${route.SHOP}?sort=-sold&page=2&limit=6`}>
+                        <a>aaaaaa</a>
+                    </Link>
+                </button> */}
+            </div>
+            <Footer />
+        </>
+    );
+};
+
+ShopComponent.getInitialProps = async ({ query }: NextPageContext) => {
+    try {
+        const data = await Promise.all([
+            await API.product.gets({
+                select: "_id name slug sold price img img1 isSale",
+                sort: query.sort as string,
+                limit: query.limit as string,
+                page: query.page as string,
+            }),
+            await API.type.gets(),
+        ]);
+        return { products: data[0].data, types: data[1].data, query };
+    } catch {
+        return {};
+    }
+};
+
+export default ShopComponent;
