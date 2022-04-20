@@ -33,7 +33,7 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
         phone: false,
     });
 
-    const carts = useSelector((s: AppState) => s.cart);
+    const carts = useSelector((s: AppState) => s.cart.carts);
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

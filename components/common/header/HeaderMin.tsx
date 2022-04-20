@@ -15,7 +15,7 @@ type HeaderMinProps = { types: Type[]; pathname: string; asPath?: string };
 const HeaderMin = (props: HeaderMinProps) => {
     const { pathname, types, asPath } = props;
 
-    const carts = useSelector((s: AppState) => s.cart);
+    const carts = useSelector((s: AppState) => s.cart.carts);
 
     const [showMenu, setShowMenu] = useState(false);
 

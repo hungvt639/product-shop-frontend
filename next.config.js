@@ -33,3 +33,18 @@ module.exports = {
         URL_UPLOAD_FILE: "http://104.215.155.198:8000/file/upload",
     },
 };
+// module.exports = {
+//     reactStrictMode: true,
+//     images: {
+//         domains: [
+//             "http://172.17.0.53:3000",
+//             "http://172.17.0.53:8000",
+//             "http://172.17.0.53",
+//         ],
+//     },
+//     env: {
+//         BACKEND: "http://172.17.0.53",
+//         PORT_BACKEND: 8000,
+//         URL_UPLOAD_FILE: "http://172.17.0.53:8000/file/upload",
+//     },
+// };

@@ -32,6 +32,12 @@ class CartAction {
             index,
         };
     };
+    public createCart = (carts: Cart[]): Action => {
+        return {
+            type: _types.CREATE_CART,
+            carts,
+        };
+    };
 }
 
 export default new CartAction();

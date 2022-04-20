@@ -26,7 +26,7 @@ const CartComponentComponent: NextPage<CartProps> = ({
     pathname,
     asPath,
 }) => {
-    const carts = useSelector((s: AppState) => s.cart);
+    const carts = useSelector((s: AppState) => s.cart.carts);
     const { reomteInCart, changeAmount } = useCart();
     const breadcrumb = useMemo(() => {
         return [

@@ -1,9 +1,14 @@
 import { useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../store";
 import action from "../store/actions";
 
 const useCart = () => {
     const dispatch = useDispatch();
+
+    const isLoad = useSelector((s: AppState) => s.cart.isLoad);
+    const carts = useSelector((s: AppState) => s.cart.carts);
+
     const reomteInCart = useCallback(
         (index: number) => {
             dispatch(action.removeIndex(index));
@@ -17,11 +22,17 @@ const useCart = () => {
         },
         [dispatch]
     );
-    // useEffect(() => {
-    //     dispatch(
-    //         action.setCart(JSON.parse(localStorage.getItem("carts") ?? "[]"))
-    //     );
-    // }, [dispatch]);
+    useEffect(() => {
+        dispatch(
+            action.createCart(JSON.parse(localStorage.getItem("carts") ?? "[]"))
+        );
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (isLoad) {
+            localStorage.setItem("carts", JSON.stringify(carts));
+        }
+    }, [carts, isLoad]);
 
     return { reomteInCart, changeAmount };
 };

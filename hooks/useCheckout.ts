@@ -16,7 +16,7 @@ const useCheckout = () => {
 
     const [checkout, setCheckout] = useState(0);
     const [ship, setShip] = useState<number>();
-    const carts = useSelector((s: AppState) => s.cart);
+    const carts = useSelector((s: AppState) => s.cart.carts);
     const [values, setValues] = useState({
         fullname: "",
         email: "",

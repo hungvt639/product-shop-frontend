@@ -41,7 +41,7 @@ type HeaderProps = {
     asPath?: string;
 };
 const Header = (props: HeaderProps) => {
-    const carts = useSelector((s: AppState) => s.cart);
+    const carts = useSelector((s: AppState) => s.cart.carts);
     const { types, pathname, asPath } = props;
     const menu = useMemo(() => {
         return (

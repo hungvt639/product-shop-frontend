@@ -8,7 +8,7 @@ import action from "../store/actions";
 const useProduct = (product?: Product) => {
     const dispatch = useDispatch();
 
-    const carts = useSelector((s: AppState) => s.cart);
+    const carts = useSelector((s: AppState) => s.cart.carts);
     const [size, setSize] = useState(product?.sizes[0] ?? "");
     const [color, setColor] = useState(product?.colors[0] ?? undefined);
     const [amount, setAmount] = useState(1);

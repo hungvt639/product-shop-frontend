@@ -13,7 +13,12 @@ export type RootState = ReturnType<typeof store.getState>;
 
 //State gốc
 export interface AppState {
-    cart: Cart[];
+    cart: CartState;
+}
+
+export interface CartState {
+    carts: Cart[];
+    isLoad: boolean;
 }
 
 export interface Action {

@@ -26,7 +26,7 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({
     pathname,
     asPath,
 }) => {
-    const carts = useSelector((s: AppState) => s.cart);
+    const carts = useSelector((s: AppState) => s.cart.carts);
 
     const {
         checkout,
