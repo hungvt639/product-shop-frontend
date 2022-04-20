@@ -47,7 +47,7 @@ const OrderDetailComponent: NextPage<OrderProps> = (props) => {
                     <div className="flex justify-center">
                         <div className="w-20 h-1 bg-black mb-5 mt-10"></div>
                     </div>
-                    <div className="flex">
+                    <div className="flex flex-wrap">
                         <div className="_left mb-10 mr-5">
                             <div className="w-full mb-10 pb-3 border-b border-dashed border-stone-300">
                                 <Steps size="small">
