@@ -81,7 +81,9 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
                                     <div
                                         onClick={() => setSize(s)}
                                         className={`_size flex justify-center items-center mr-2 cursor-pointer${
-                                            s === size ? " _size-select" : ""
+                                            s === size
+                                                ? " _size-select"
+                                                : " hover:bg-slate-400 hover:text-white hover:border-slate-400"
                                         }`}
                                         key={i}
                                     >
@@ -95,7 +97,7 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
                                         <p className="text-center">{c.name}</p>
                                         <div
                                             onClick={() => setColor(c)}
-                                            className={`_color overflow-hidden cursor-pointer${
+                                            className={`_color overflow-hidden hover:bg-sky-800 cursor-pointer${
                                                 color?._id === c._id
                                                     ? " _color-select"
                                                     : ""

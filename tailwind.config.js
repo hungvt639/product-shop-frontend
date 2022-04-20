@@ -6,7 +6,11 @@ module.exports = {
         extend: {},
     },
     variants: {
-        extend: {},
+        extend: {
+            zIndex: {
+                100: "100",
+            },
+        },
     },
     plugins: [],
 };

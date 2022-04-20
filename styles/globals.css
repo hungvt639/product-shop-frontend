@@ -107,3 +107,9 @@ input::-webkit-inner-spin-button {
     border-color: #a0a0a0 !important;
     box-shadow: 0 0 0 2px rgba(203, 203, 203, 0.2) !important;
 }
+.ant-popover-inner {
+    box-shadow: 0 0 0 2px rgba(203, 203, 203, 0.2) !important;
+}
+.ant-popover-inner-content {
+    padding: 0;
+}

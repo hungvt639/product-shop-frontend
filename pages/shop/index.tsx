@@ -72,7 +72,7 @@ const ShopComponent: NextPage<ShopProps> = ({
                         >
                             <Option value="name">Tên A-Z</Option>
                             <Option value="-name">Tên Z-A</Option>
-                            <Option value="-sort">Bán chạy nhất</Option>
+                            <Option value="-sold">Bán chạy nhất</Option>
                             <Option value="price">Giá tăng dần</Option>
                             <Option value="-price">Giá giảm dần</Option>
                         </Select>
