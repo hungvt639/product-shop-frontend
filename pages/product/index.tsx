@@ -41,7 +41,7 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
             </Head>
             <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             <BreadcrumbComponent data={breadcrumb} />
-            <div className="_max-width flex _shops">
+            <div className="_max-width flex flex-wrap _shops">
                 <div className="_left">
                     <Sider types={types ?? []} asPath={asPath} />
                 </div>

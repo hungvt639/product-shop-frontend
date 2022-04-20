@@ -66,7 +66,7 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({
                     Phương thức thanh toán
                 </span>
             </div>
-            <div className="_max-width flex _checkout w-full mt-5 mb-16">
+            <div className="_max-width flex flex-wrap _checkout w-full mt-5 mb-16">
                 <div className="_left pr-10">
                     {checkout === 0 ? (
                         <div>
@@ -90,7 +90,7 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({
                         </div>
                     )}
                 </div>
-                <div className="_right pl-5 border-l border-solid border-neutral-400">
+                <div className="pl-5 border-l border-solid border-neutral-400 _right">
                     <ProductCheckout carts={carts} ship={ship} />
                 </div>
             </div>

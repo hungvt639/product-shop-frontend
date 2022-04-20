@@ -55,8 +55,8 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
             <Header types={types ?? []} pathname={pathname} asPath={asPath} />
             <Breadcrumb data={breadcrumb} />
             {product && (
-                <div className="_product  _max-width">
-                    <div className="flex flex-wra stickyp">
+                <div className="_product _max-width">
+                    <div className="flex flex-wrap sticky">
                         <div className="_left top-0">
                             <Avatar
                                 imgs={[

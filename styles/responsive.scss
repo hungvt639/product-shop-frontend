@@ -37,6 +37,31 @@
             }
         }
     }
+    // ._shops {
+    //     margin-top: 50px;
+    // }
+    ._checkout {
+        flex-wrap: wrap-reverse;
+        ._left {
+            margin-top: 20px;
+            padding-right: 5px;
+        }
+        ._right {
+            padding-left: 0;
+        }
+    }
+    ._max-width {
+        ._left {
+            width: 100%;
+        }
+        ._right {
+            margin-top: 50px;
+            width: 100%;
+            ._item {
+                width: 50%;
+            }
+        }
+    }
     ._footer {
         ._max-width {
             display: none;

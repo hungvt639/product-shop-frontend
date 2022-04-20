@@ -25,7 +25,7 @@ const AvatarComponent = (props: AvatarProps) => {
                     </div>
                 ))}
             </div>
-            <div className="w-full px-5">
+            <div className="w-full px-5 flex justify-center">
                 <div className="_show-avatar">
                     <img src={imgs[index]} alt="avatar" />
                 </div>

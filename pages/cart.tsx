@@ -53,8 +53,8 @@ const CartComponentComponent: NextPage<CartProps> = ({
                 <div className="flex justify-center">
                     <div className="w-20 h-1 bg-black mb-5 mt-10"></div>
                 </div>
-                <div className="flex">
-                    <div className="_left mb-10 mr-5">
+                <div className="flex flex-wrap">
+                    <div className="_left mb-10 pr-5">
                         {!carts.length && (
                             <p className="text-base font-bold flex justify-center items-center flex-1 h-full">
                                 Vui lòng quay lại SHOP để lựa chọn sản phẩm
@@ -158,7 +158,7 @@ const CartComponentComponent: NextPage<CartProps> = ({
                             </div>
                         ))}
                     </div>
-                    <div className="_right mx-5 mb-10">
+                    <div className="px-5 mb-10 _right">
                         <div className="w-full border border-solid border-neutral-300 py-6 px-4 rounded-sm">
                             <h1 className="text-xl font-bold pb-3 border-b border-dotted border-neutral-300">
                                 Thông tin đơn hàng
