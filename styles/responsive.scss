@@ -40,6 +40,14 @@
     // ._shops {
     //     margin-top: 50px;
     // }
+    ._sider {
+        ._sider-large {
+            display: none;
+        }
+        ._sider-small {
+            display: block;
+        }
+    }
     ._checkout {
         flex-wrap: wrap-reverse;
         ._left {
@@ -67,7 +75,13 @@
     }
     ._footer {
         ._max-width {
-            display: none;
+            ._content {
+                width: 100%;
+                display: block;
+                margin-top: 20px;
+                padding: 0 20px;
+                border-top: 1px solid #e5e7eb;
+            }
         }
     }
 }

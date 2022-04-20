@@ -72,7 +72,24 @@
         }
     }
 }
+._sider {
+    ._sider-large {
+        width: 100%;
+    }
+    ._sider-small {
+        display: none;
+        ._show-menu {
+            display: block;
+        }
+        ._not-show-menu {
+            display: none;
+        }
+    }
+}
 ._footer {
+    ._content {
+        width: 25%;
+    }
     h2 {
         font-size: 20px;
         margin-bottom: 20px;
