@@ -20,7 +20,29 @@
     height: 100vh;
 }
 ._header {
-    // background-color: antiquewhite;
+    ._header-min {
+        display: none;
+        ._menu-min {
+            position: fixed;
+            left: 0;
+            top: 60px;
+            background: #ffffff;
+            height: calc(100% - 60px);
+            box-shadow: 0px -5px 3px 0px #a4a4a46c;
+            ._show-menu {
+                display: block;
+            }
+            ._not-show-menu {
+                display: none;
+            }
+            ._show-type {
+                display: block;
+            }
+            ._not-show-type {
+                display: none;
+            }
+        }
+    }
     ._image-logo {
         max-width: 300px;
         max-height: 70px;

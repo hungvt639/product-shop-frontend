@@ -11,7 +11,7 @@ const Search = () => {
     const { defaultF, onShow, onSubmit, show } = useSearchHeader();
 
     return (
-        <div className="relative max-w-xs w-full">
+        <div className="relative max-w-xs w-full _search">
             <form
                 className="flex flex-row overflow-hidden rounded-md"
                 onSubmit={onSubmit}
@@ -30,7 +30,7 @@ const Search = () => {
             </form>
             <div
                 onClick={defaultF}
-                className={`absolute top-12 left-0 max-w-xs w-96 z-[100] shadow-md bg-white rounded-sm border ${
+                className={`absolute top-12 left-0 max-w-xs w-96 z-[100] shadow-md bg-white rounded-sm border _search-content ${
                     show ? "block" : "hidden"
                 }`}
             >
@@ -41,7 +41,7 @@ const Search = () => {
                         Không tìm thấy sản phẩm nào
                     </div>
                 ) : (
-                    <div className="max-w-xs w-96">
+                    <div className="">
                         {searchRes.hits.map((ps) => (
                             <Link
                                 key={ps._id}

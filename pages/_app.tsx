@@ -2,6 +2,8 @@ import "antd/dist/antd.css";
 import "../styles/globals.css";
 import "../styles/globals.scss";
 import "../styles/container.scss";
+import "../styles/responsive.scss";
+
 import "../locales/i18n";
 import store from "../store";
 import { Provider } from "react-redux";

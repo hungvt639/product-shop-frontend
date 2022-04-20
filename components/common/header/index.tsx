@@ -15,6 +15,7 @@ import _env from "../../../config/_env";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../store";
 import CartBase from "./CartBase";
+import HeaderMin from "./HeaderMin";
 
 const infos = [
     {
@@ -65,6 +66,7 @@ const Header = (props: HeaderProps) => {
 
     return (
         <header className="w-full _header py-5">
+            <HeaderMin pathname={pathname} types={types} asPath={asPath} />
             <div className="_max-width w-full flex flex-col">
                 <div className="flex w-full pr-5">
                     <div className="_image-logo">

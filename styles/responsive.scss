@@ -1,0 +1,45 @@
+@media only screen and (max-width: 1024px) {
+    ._header {
+        ._image-logo {
+            max-width: 200px;
+            max-height: 70px;
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    ._header {
+        padding-bottom: 0;
+        border-bottom: 1px solid #e5e7eb;
+        ._max-width {
+            display: none;
+        }
+        ._header-min {
+            display: flex;
+            ._search {
+                width: 100%;
+                max-width: 100%;
+                form {
+                    border-radius: 2px;
+                    input {
+                        border-top-left-radius: 2px;
+                        border-bottom-left-radius: 2px;
+                        padding: 2px 5px;
+                    }
+                    button {
+                        padding: 2px 5px;
+                    }
+                }
+                ._search-content {
+                    top: 30px;
+                    max-width: 100%;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    ._footer {
+        ._max-width {
+            display: none;
+        }
+    }
+}
