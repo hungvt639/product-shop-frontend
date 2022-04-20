@@ -5,7 +5,7 @@ import { Pagination, SearchBody } from "../interface";
 import { Product } from "./productAPI";
 
 class TypeAPI {
-    resource = "apiv1/type";
+    private resource = "apiv1/type";
 
     public gets = (): Promise<AxiosResponse<Type[]>> => {
         return AxiosAPI(true).get(`${this.resource}`);

@@ -7,23 +7,6 @@ class CarouselAPI {
     public get = (): Promise<AxiosResponse<Carousel[]>> => {
         return AxiosAPI(true).get(`${this.resource}`);
     };
-
-    // public create = (
-    //     data: CreateCarousel
-    // ): Promise<AxiosResponse<Carousel>> => {
-    //     return AxiosAPI(true).post(`${this.resource}`, data);
-    // };
-
-    // public editCarousel = (
-    //     id: string,
-    //     data: CreateCarousel
-    // ): Promise<AxiosResponse<Carousel>> => {
-    //     return AxiosAPI(true).put(`${this.resource}/${id}`, data);
-    // };
-
-    // public deleteCarousel = (id: string): Promise<AxiosResponse<any>> => {
-    //     return AxiosAPI(true).delete(`${this.resource}/${id}`);
-    // };
 }
 
 export default new CarouselAPI();

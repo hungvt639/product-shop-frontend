@@ -1,6 +1,5 @@
 import { CombinedState, createStore } from "redux";
-import { Color } from "../api/repository/colorAPI";
-import { Product } from "../api/repository/productAPI";
+import { Color, Product } from "../api/repository/productAPI";
 import { Type } from "../api/repository/typeAPI";
 import reducer from "./reduces";
 

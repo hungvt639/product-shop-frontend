@@ -3,7 +3,7 @@ import { Cart } from "../../store";
 import AxiosAPI from "../config";
 
 class OrderAPI {
-    resource = "apiv1/order";
+    private resource = "apiv1/order";
 
     public create = (order: OrderCreate): Promise<AxiosResponse<any>> => {
         return AxiosAPI(false).post(`${this.resource}`, order);

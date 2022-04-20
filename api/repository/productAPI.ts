@@ -2,11 +2,10 @@ import { AxiosResponse } from "axios";
 import utils from "../../utils";
 import AxiosAPI from "../config";
 import { Pagination, SearchBody } from "../interface";
-import { Color } from "./colorAPI";
 import { Type } from "./typeAPI";
 
 class ProductAPI {
-    resource = "apiv1/product";
+    private resource = "apiv1/product";
 
     public gets = (
         obj?: SearchBody
@@ -81,4 +80,9 @@ export interface SearchResponse {
         value: number;
         relation: string;
     };
+}
+export interface Color {
+    _id: string;
+    name: string;
+    code: string;
 }
