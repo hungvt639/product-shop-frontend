@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "../store";
+import { Product } from "../api/repository/productAPI";
+import { AppState, CartProduct } from "../store";
 import action from "../store/actions";
 
 const useCart = () => {
@@ -30,7 +31,10 @@ const useCart = () => {
 
     useEffect(() => {
         if (isLoad) {
-            localStorage.setItem("carts", JSON.stringify(carts));
+            const cs = carts.map((c) => {
+                return { ...c, product: new CartProduct(c.product) };
+            });
+            localStorage.setItem("carts", JSON.stringify(cs));
         }
     }, [carts, isLoad]);
 
