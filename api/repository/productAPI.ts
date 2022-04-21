@@ -50,7 +50,7 @@ export interface Product {
     sames?: Product[];
 }
 
-interface ProductSearch {
+export interface ProductSearch {
     _index: string;
     _id: string;
     _score: number;
@@ -72,7 +72,7 @@ interface ProductSearch {
     };
 }
 
-export interface SearchResponse {
+export class SearchResponse {
     total: number;
     max_score: number;
     hits: ProductSearch[];
@@ -80,6 +80,12 @@ export interface SearchResponse {
         value: number;
         relation: string;
     };
+    constructor() {
+        this.total = 0;
+        this.max_score = 0;
+        this.hits = [];
+        this.extTotal = { relation: "", value: 0 };
+    }
 }
 export interface Color {
     _id: string;

@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import route from "../../../config/route";
 import useSearchHeader from "./hook/useSearchhHeader";
+import SearchItemComponent from "../../SearchItem";
 
 const Search = () => {
     const { setValue, value, searchRes } = useSearch();
@@ -43,33 +44,7 @@ const Search = () => {
                 ) : (
                     <menu className="">
                         {searchRes.hits.map((ps) => (
-                            <Link
-                                key={ps._id}
-                                href={`${route.PRODUCT}/${ps._source.slug}`}
-                            >
-                                <a className="flex hover:bg-zinc-100 py-3 px-5 border-t border-dotted justify-between">
-                                    <div className="w-full">
-                                        <h2 className="text-base font-bold pr-5">
-                                            {ps._source.name}
-                                        </h2>
-                                        <p>{ps._source.type.name}</p>
-                                        <p>
-                                            {ps._source.price.toLocaleString(
-                                                "vi-VN"
-                                            )}
-                                            ₫
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <div className="w-16 h-16">
-                                            <img
-                                                src={ps._source.img}
-                                                alt="img"
-                                            />
-                                        </div>
-                                    </div>
-                                </a>
-                            </Link>
+                            <SearchItemComponent item={ps} key={ps._id} />
                         ))}
                     </menu>
                 )}

@@ -1,22 +1,30 @@
 import { useCallback, useEffect, useState } from "react";
 import API from "../api";
+import { SearchBody } from "../api/interface";
 import { SearchResponse } from "../api/repository/productAPI";
 
-const useSearch = () => {
-    const [value, setValue] = useState("");
+const useSearch = (valueSearch?: SearchResponse, query?: SearchBody) => {
+    const [value, setValue] = useState<string>();
     const [timer, setTimer] = useState<NodeJS.Timeout>();
-    const [searchRes, setSearchRes] = useState<SearchResponse>();
+    const [searchRes, setSearchRes] = useState<SearchResponse | undefined>(
+        valueSearch
+    );
 
     const delay = 1000;
     const search = useCallback(async () => {
-        if (value) {
+        if (typeof value !== "undefined") {
             if (timer) clearTimeout(timer);
-
             setTimer(
                 setTimeout(async () => {
-                    const res = await API.product.search({ search: value });
-                    console.log("SearchResponse", res.data);
-                    setSearchRes(res.data);
+                    try {
+                        const res = await API.product.search({
+                            ...query,
+                            search: value,
+                        });
+                        setSearchRes(res.data);
+                    } catch {
+                        setSearchRes(new SearchResponse());
+                    }
                 }, delay)
             );
         }
