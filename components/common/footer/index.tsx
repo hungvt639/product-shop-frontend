@@ -8,11 +8,11 @@ import _env from "../../../config/_env";
 import route from "../../../config/route";
 const Footer = () => {
     return (
-        <div className="_footer w-full">
+        <footer className="_footer w-full">
             <div className="h-20 bg-gray-200  w-full border-b border-solid border-gray-300 flex items-center">
                 <div className="_max-width w-full font-medium flex flex-row text-base">
                     <BsTelephoneFill className="phone-icon mr-3" />
-                    Hỗ trợ / Mua hàng:{" "}
+                    Hỗ trợ / Mua hàng:
                     <span className="text-red-500 ml-2">
                         {_env.PHONE_NUMBER}
                     </span>
@@ -80,7 +80,7 @@ const Footer = () => {
             <div className="h-16  w-full border-t border-solid border-gray-300 flex items-center justify-center">
                 Copyright © 2022 Outeritykids. Powered by Haravan
             </div>
-        </div>
+        </footer>
     );
 };
 export default Footer;

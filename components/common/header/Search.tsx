@@ -41,7 +41,7 @@ const Search = () => {
                         Không tìm thấy sản phẩm nào
                     </div>
                 ) : (
-                    <div className="">
+                    <menu className="">
                         {searchRes.hits.map((ps) => (
                             <Link
                                 key={ps._id}
@@ -71,7 +71,7 @@ const Search = () => {
                                 </a>
                             </Link>
                         ))}
-                    </div>
+                    </menu>
                 )}
             </div>
         </div>

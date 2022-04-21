@@ -21,7 +21,6 @@ const HeaderMin = (props: HeaderMinProps) => {
 
     return (
         <div className="_header-min flex-col">
-            {/* <div className="relative"> */}
             <MenuMin
                 pathname={pathname}
                 show={showMenu}
@@ -58,7 +57,6 @@ const HeaderMin = (props: HeaderMinProps) => {
                     </a>
                 </Link>
             </div>
-            {/* </div> */}
             <div className="py-1 px-2">
                 <Search />
             </div>

@@ -21,7 +21,7 @@ const MenuMin = (props: MenuMinProps) => {
                 show ? " block" : " hidden"
             }`}
         >
-            <div className={showType ? "_not-show-menu" : "_show-menu"}>
+            <menu className={showType ? "_not-show-menu" : "_show-menu"}>
                 <div
                     className={`text-base py-3 border-b hover:bg-slate-50 font-semibold${
                         pathname === route.HOME
@@ -65,8 +65,8 @@ const MenuMin = (props: MenuMinProps) => {
                         {_env.EMAIL}
                     </span>
                 </div>
-            </div>
-            <div className={showType ? "_show-type" : "_not-show-type"}>
+            </menu>
+            <menu className={showType ? "_show-type" : "_not-show-type"}>
                 <div
                     onClick={() => setShowtype(false)}
                     className="flex items-center text-base py-3 border-b cursor-pointer"
@@ -90,7 +90,7 @@ const MenuMin = (props: MenuMinProps) => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </menu>
         </div>
     );
 };

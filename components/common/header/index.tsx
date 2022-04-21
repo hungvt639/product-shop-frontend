@@ -45,7 +45,7 @@ const Header = (props: HeaderProps) => {
     const { types, pathname, asPath } = props;
     const menu = useMemo(() => {
         return (
-            <div className="flex flex-col border-t-2 border-solid border-gray-500 bg-white">
+            <menu className="flex flex-col border-t-2 border-solid border-gray-500 bg-white">
                 {types.map((type) => (
                     <div
                         className={`px-5 py-2 text-base border-t border-solid border-gray-300${
@@ -60,7 +60,7 @@ const Header = (props: HeaderProps) => {
                         </Link>
                     </div>
                 ))}
-            </div>
+            </menu>
         );
     }, [asPath, types]);
 
@@ -127,7 +127,7 @@ const Header = (props: HeaderProps) => {
                     </div>
                 </div>
                 <div className="flex w-full mt-5">
-                    <div className="flex items-center">
+                    <menu className="flex items-center">
                         <div
                             className={`text-base font-semibold mr-5${
                                 pathname === route.HOME
@@ -157,7 +157,7 @@ const Header = (props: HeaderProps) => {
                                 <Link href={route.SHOP}>SHOP</Link>
                             </Dropdown>
                         </div>
-                    </div>
+                    </menu>
                     <div className="flex flex-1 justify-end px-5">
                         <Search />
                     </div>
