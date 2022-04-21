@@ -17,11 +17,15 @@ const MenuMin = (props: MenuMinProps) => {
     const [showType, setShowtype] = useState(false);
     return (
         <div
-            className={`_menu-min bg-white z-[150] w-full border px-5${
-                show ? " block" : " hidden"
+            className={`_menu-min bg-white z-[150] w-full px-5${
+                show ? " _block" : " _hidden"
             }`}
         >
-            <menu className={showType ? "_not-show-menu" : "_show-menu"}>
+            <menu
+                className={`_show-menu-min${
+                    showType ? " _not-show-menu" : " _show-menu"
+                }`}
+            >
                 <div
                     className={`text-base py-3 border-b hover:bg-slate-50 font-semibold${
                         pathname === route.HOME

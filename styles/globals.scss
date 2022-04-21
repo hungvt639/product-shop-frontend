@@ -22,13 +22,27 @@
 ._header {
     ._header-min {
         display: none;
+        ._block {
+            height: calc(100% - 60px);
+            box-shadow: 0px -5px 3px 0px #a4a4a46c;
+            border: 1px solid #a4a4a46c;
+        }
+        ._hidden {
+            height: 0;
+        }
         ._menu-min {
             position: fixed;
             left: 0;
             top: 60px;
             background: #ffffff;
-            height: calc(100% - 60px);
-            box-shadow: 0px -5px 3px 0px #a4a4a46c;
+            transition: height 0.5s ease-in;
+            overflow: hidden;
+            ._show-menu-min {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
             ._show-menu {
                 display: block;
             }
@@ -78,11 +92,18 @@
     }
     ._sider-small {
         display: none;
+        ._small {
+            overflow: hidden;
+        }
         ._show-menu {
-            display: block;
+            max-height: 500px;
+            opacity: 1;
+            transition: 1s ease-in;
         }
         ._not-show-menu {
-            display: none;
+            max-height: 0;
+            opacity: 0.5;
+            transition: 1s ease-in;
         }
     }
 }
@@ -136,18 +157,21 @@
                 position: absolute;
                 object-fit: cover;
                 width: 100%;
+                opacity: 1;
+                transition: 0.5s ease-in;
             }
             .img1 {
-                display: none;
+                opacity: 0;
+                transition: 0.5s ease-in;
             }
         }
         &:hover {
             .image {
                 .img {
-                    display: none;
+                    opacity: 0;
                 }
                 .img1 {
-                    display: block;
+                    opacity: 1;
                 }
             }
         }

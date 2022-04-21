@@ -15,12 +15,12 @@ const ItemComponent = (props: ItemProps) => {
                 <a>
                     <div className="item">
                         <div className="image">
-                            <img className="img" src={item.img} alt="avatar" />
                             <img
                                 className="img1"
                                 src={item.img1}
                                 alt="avatar"
                             />
+                            <img className="img" src={item.img} alt="avatar" />
                         </div>
                         <h3 className="text-lg font-semibold mt-5">
                             {item.name}

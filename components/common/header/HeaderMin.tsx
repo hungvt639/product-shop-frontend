@@ -10,6 +10,8 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../../store";
 import Search from "./Search";
 import MenuMin from "./MenuMin";
+import Dropdown from "../../../container/Dropdown";
+import CartBase from "./CartBase";
 
 type HeaderMinProps = { types: Type[]; pathname: string; asPath?: string };
 const HeaderMin = (props: HeaderMinProps) => {
@@ -44,18 +46,23 @@ const HeaderMin = (props: HeaderMinProps) => {
                         />
                     </a>
                 </Link>
-                <Link href={route.CART}>
-                    <a>
-                        <div className="_cart-btn flex items-center text-14 font-semibold cursor-pointer">
-                            <div className="_cart-icon mr-2">
-                                <AiOutlineShoppingCart />
-                                <div className="_cart-number">
-                                    {carts.length}
+                <Dropdown
+                    placement="top100_right"
+                    overlay={<CartBase carts={carts} />}
+                >
+                    <Link href={route.CART}>
+                        <a>
+                            <div className="_cart-btn flex items-center text-14 font-semibold cursor-pointer">
+                                <div className="_cart-icon mr-2">
+                                    <AiOutlineShoppingCart />
+                                    <div className="_cart-number">
+                                        {carts.length}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </Link>
+                        </a>
+                    </Link>
+                </Dropdown>
             </div>
             <div className="py-1 px-2">
                 <Search />

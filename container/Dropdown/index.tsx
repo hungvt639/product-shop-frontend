@@ -27,7 +27,7 @@ const Dropdown = (props: DropdownProps) => {
         <div className="_dropdown">
             {children}
             <div style={getplacement(placement)} className="overlay">
-                {overlay}
+                <div className="overlay-content">{overlay}</div>
             </div>
         </div>
     );

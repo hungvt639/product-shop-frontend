@@ -1,8 +1,9 @@
 import "antd/dist/antd.css";
 import "../styles/globals.css";
+import "../styles/animation.css";
 import "../styles/globals.scss";
-import "../styles/container.scss";
 import "../styles/responsive.scss";
+import "../styles/container.scss";
 
 import "../locales/i18n";
 import store from "../store";

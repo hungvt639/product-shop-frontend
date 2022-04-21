@@ -71,7 +71,7 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="pl-5 _content">
+                    <div className="pl-5 _content overflow-hidden">
                         <h2>Fanpage</h2>
                         <iframe src="https://www.facebook.com/v2.0/plugins/page.php?adapt_container_width=true&app_id=&channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df840f1ff1a3c08%26domain%3Douteritykids.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fouteritykids.com%252Ff313855d0f052d%26relation%3Dparent.parent&container_width=335&height=300&hide_cover=false&href=https%3A%2F%2Fwww.facebook.com%2Fouteritykids%2F%3Fnotif_id%3D1638862837895794%26notif_t%3Dpage_user_activity%26ref%3Dnotif&locale=en_US&sdk=joey&show_facepile=true&show_posts=false&small_header=false" />
                     </div>

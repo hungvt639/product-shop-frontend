@@ -70,9 +70,12 @@ input::-webkit-inner-spin-button {
 }
 
 /* antd */
+/* Image */
 .ant-image-preview-img {
     display: unset;
 }
+
+/* Step */
 .ant-steps-item-finish .ant-steps-item-icon {
     background-color: #fff;
     border-color: #009900;
@@ -98,6 +101,8 @@ input::-webkit-inner-spin-button {
     > .ant-steps-item-tail::after {
     background-color: #009900;
 }
+
+/* Select */
 .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
     border-color: #a0a0a0;
 }
@@ -106,10 +111,4 @@ input::-webkit-inner-spin-button {
 ._select-ant.ant-select-focused .ant-select-selector {
     border-color: #a0a0a0 !important;
     box-shadow: 0 0 0 2px rgba(203, 203, 203, 0.2) !important;
-}
-.ant-popover-inner {
-    box-shadow: 0 0 0 2px rgba(203, 203, 203, 0.2) !important;
-}
-.ant-popover-inner-content {
-    padding: 0;
 }

@@ -37,7 +37,11 @@ const Sider = (props: SiderProps) => {
                 >
                     <h1>DANH MỤC SẢN PHẨM</h1> <BsChevronDown />
                 </div>
-                <div className={showMenu ? "_show-menu" : "_not-show-menu"}>
+                <div
+                    className={`_small${
+                        showMenu ? " _show-menu" : " _not-show-menu"
+                    }`}
+                >
                     {types?.map((t) => (
                         <div
                             className={`text-base font-semibold py-2 px-2 border-b mr-9 ${
