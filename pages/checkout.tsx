@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BsChevronRight } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import API from "../api";
+import { BlogLink } from "../api/repository/blogLinkAPI";
 import { Type } from "../api/repository/typeAPI";
 import Footer from "../components/common/footer";
 import Header from "../components/common/header";
@@ -19,12 +20,14 @@ type CheckoutProps = {
     types?: Type[];
     pathname: string;
     asPath?: string;
+    blogLinks?: BlogLink[];
 };
 
 const CheckoutComponent: NextPage<CheckoutProps> = ({
     types,
     pathname,
     asPath,
+    blogLinks,
 }) => {
     const carts = useSelector((s: AppState) => s.cart.carts);
 
@@ -104,7 +107,7 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({
                     <ProductCheckout carts={carts} ship={ship} />
                 </div>
             </div>
-            <Footer />
+            <Footer blogLinks={blogLinks ?? []} />
         </>
     );
 };
@@ -114,8 +117,16 @@ CheckoutComponent.getInitialProps = async ({
     asPath,
 }: NextPageContext) => {
     try {
-        const res = await API.type.gets();
-        return { types: res.data, pathname, asPath };
+        const data = await Promise.all([
+            await API.type.gets(),
+            await API.blog_link.gets(),
+        ]);
+        return {
+            types: data[0].data,
+            blogLinks: data[1].data,
+            pathname,
+            asPath,
+        };
     } catch {
         return { pathname, asPath };
     }

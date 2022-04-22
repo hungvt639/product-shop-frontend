@@ -4,6 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import API from "../api";
 import { Pagination } from "../api/interface";
+import { BlogLink } from "../api/repository/blogLinkAPI";
 import { Carousel } from "../api/repository/carouselAPI";
 import { Product } from "../api/repository/productAPI";
 import { Type } from "../api/repository/typeAPI";
@@ -20,6 +21,7 @@ type HomeProps = {
     types?: Type[];
     pathname: string;
     asPath?: string;
+    blogLinks?: BlogLink[];
 };
 
 const HomeComponent: NextPage<HomeProps> = ({
@@ -28,6 +30,7 @@ const HomeComponent: NextPage<HomeProps> = ({
     types,
     pathname,
     asPath,
+    blogLinks,
 }: HomeProps) => {
     return (
         <>
@@ -45,7 +48,7 @@ const HomeComponent: NextPage<HomeProps> = ({
                 {products && <ListItems items={products.docs} />}
             </div>
 
-            <Footer />
+            <Footer blogLinks={blogLinks ?? []} />
         </>
     );
 };
@@ -63,12 +66,14 @@ HomeComponent.getInitialProps = async ({
             }),
             await API.carousel.get(),
             await API.type.gets(),
+            await API.blog_link.gets(),
         ]);
 
         return {
             carousels: data[1].data,
             products: data[0].data,
             types: data[2].data,
+            blogLinks: data[3].data,
             pathname,
             asPath,
         };

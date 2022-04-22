@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import API from "../../api";
 import { SearchBody } from "../../api/interface";
+import { BlogLink } from "../../api/repository/blogLinkAPI";
 import { Type, TypeProduct } from "../../api/repository/typeAPI";
 import BreadcrumbComponent from "../../components/Breadcrumb";
 import Footer from "../../components/common/footer";
@@ -20,6 +21,7 @@ type TypeProductProps = {
     query?: SearchBody;
     pathname: string;
     asPath?: string;
+    blogLinks?: BlogLink[];
 };
 
 const TypeProductComponent: NextPage<TypeProductProps> = ({
@@ -28,6 +30,7 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
     query,
     pathname,
     asPath,
+    blogLinks,
 }) => {
     const router = useRouter();
 
@@ -78,7 +81,7 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer blogLinks={blogLinks ?? []} />
         </>
     );
 };
@@ -95,10 +98,12 @@ TypeProductComponent.getInitialProps = async ({
                 ...query,
             }),
             await API.type.gets(),
+            await API.blog_link.gets(),
         ]);
         return {
             type: data[0].data,
             types: data[1].data,
+            blogLinks: data[2].data,
             query,
             pathname,
             asPath,

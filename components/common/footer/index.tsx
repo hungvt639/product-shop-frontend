@@ -6,7 +6,15 @@ import { FiSmartphone } from "react-icons/fi";
 import { AiOutlineMail } from "react-icons/ai";
 import _env from "../../../config/_env";
 import route from "../../../config/route";
-const Footer = () => {
+import { BlogLink } from "../../../api/repository/blogLinkAPI";
+
+type FooterProps = {
+    blogLinks: BlogLink[];
+};
+
+const Footer = (props: FooterProps) => {
+    const { blogLinks } = props;
+
     return (
         <footer className="_footer w-full">
             <div className="h-20 bg-gray-200  w-full border-b border-solid border-gray-300 flex items-center">
@@ -38,10 +46,17 @@ const Footer = () => {
                             <div className="mb-2">
                                 <Link href={route.SEARCH}>Tìm kiếm</Link>
                             </div>
-                            <div className="mb-2">
-                                <Link href={route.INTRODUCE}>Giới thiệu</Link>
-                            </div>
-                            <div className="mb-2">
+                            {blogLinks.map((blogLink) => (
+                                <div key={blogLink._id} className="mb-2">
+                                    <Link
+                                        href={`${route.PAGE}/${blogLink.slug}`}
+                                    >
+                                        {blogLink.name}
+                                    </Link>
+                                </div>
+                            ))}
+
+                            {/* <div className="mb-2">
                                 <Link href={route.LIE}>Chính sách đổi trả</Link>
                             </div>
                             <div className="mb-2">
@@ -56,7 +71,7 @@ const Footer = () => {
                             </div>
                             <div>
                                 <Link href={route.CONTACT}>Liên hệ</Link>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="contact px-5 flex justify-center _content">

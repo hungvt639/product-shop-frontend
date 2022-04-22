@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { IoReturnUpBackOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import API from "../api";
+import { BlogLink } from "../api/repository/blogLinkAPI";
 import { Type } from "../api/repository/typeAPI";
 import BreadcrumbComponent from "../components/Breadcrumb";
 import Footer from "../components/common/footer";
@@ -20,11 +21,13 @@ type CartProps = {
     types?: Type[];
     pathname: string;
     asPath?: string;
+    blogLinks?: BlogLink[];
 };
 const CartComponentComponent: NextPage<CartProps> = ({
     types,
     pathname,
     asPath,
+    blogLinks,
 }) => {
     const carts = useSelector((s: AppState) => s.cart.carts);
     const { reomteInCart, changeAmount } = useCart();
@@ -206,7 +209,7 @@ const CartComponentComponent: NextPage<CartProps> = ({
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer blogLinks={blogLinks ?? []} />
         </>
     );
 };
@@ -216,8 +219,16 @@ CartComponentComponent.getInitialProps = async ({
     asPath,
 }: NextPageContext) => {
     try {
-        const res = await API.type.gets();
-        return { types: res.data, pathname, asPath };
+        const data = await Promise.all([
+            await API.type.gets(),
+            await API.blog_link.gets(),
+        ]);
+        return {
+            types: data[0].data,
+            blogLinks: data[1].data,
+            pathname,
+            asPath,
+        };
     } catch {
         return { pathname, asPath };
     }

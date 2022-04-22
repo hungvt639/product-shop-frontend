@@ -4,6 +4,7 @@ import { Fragment, useCallback, useEffect, useMemo } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import API from "../api";
 import { SearchBody } from "../api/interface";
+import { BlogLink } from "../api/repository/blogLinkAPI";
 import { SearchResponse } from "../api/repository/productAPI";
 import { Type } from "../api/repository/typeAPI";
 import BreadcrumbComponent from "../components/Breadcrumb";
@@ -20,10 +21,11 @@ type SearchComponentProps = {
     asPath?: string;
     searchValue?: SearchResponse;
     query: SearchBody;
+    blogLinks?: BlogLink[];
 };
 
 const SearchComponent: NextPage<SearchComponentProps> = (props) => {
-    const { pathname, asPath, searchValue, types, query } = props;
+    const { pathname, asPath, searchValue, types, query, blogLinks } = props;
 
     const { searchRes, setValue, value } = useSearch(searchValue, query);
 
@@ -84,7 +86,7 @@ const SearchComponent: NextPage<SearchComponentProps> = (props) => {
                     )}
                 </div>
             </div>
-            <Footer />
+            <Footer blogLinks={blogLinks ?? []} />
         </>
     );
 };
@@ -98,10 +100,12 @@ SearchComponent.getInitialProps = async ({
         const data = await Promise.all([
             query.search ? await API.product.search(query) : undefined,
             await API.type.gets(),
+            await API.blog_link.gets(),
         ]);
         return {
-            types: data[1].data,
             searchValue: data[0]?.data ?? undefined,
+            types: data[1].data,
+            blogLinks: data[2]?.data,
             pathname,
             asPath,
             query,

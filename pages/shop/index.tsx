@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import API from "../../api";
 import { Pagination, SearchBody } from "../../api/interface";
+import { BlogLink } from "../../api/repository/blogLinkAPI";
 import { Product } from "../../api/repository/productAPI";
 import { Type } from "../../api/repository/typeAPI";
 import BreadcrumbComponent from "../../components/Breadcrumb";
@@ -23,6 +24,7 @@ type ShopProps = {
     query?: SearchBody;
     pathname: string;
     asPath?: string;
+    blogLinks?: BlogLink[];
 };
 const ShopComponent: NextPage<ShopProps> = ({
     products,
@@ -30,6 +32,7 @@ const ShopComponent: NextPage<ShopProps> = ({
     query,
     pathname,
     asPath,
+    blogLinks,
 }) => {
     const router = useRouter();
 
@@ -88,7 +91,7 @@ const ShopComponent: NextPage<ShopProps> = ({
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer blogLinks={blogLinks ?? []} />
         </>
     );
 };
@@ -105,10 +108,12 @@ ShopComponent.getInitialProps = async ({
                 ...query,
             }),
             await API.type.gets(),
+            await API.blog_link.gets(),
         ]);
         return {
             products: data[0].data,
             types: data[1].data,
+            blogLinks: data[2].data,
             query,
             pathname,
             asPath,

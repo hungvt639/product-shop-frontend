@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useMemo } from "react";
 import API from "../../api";
+import { BlogLink } from "../../api/repository/blogLinkAPI";
 import { Product } from "../../api/repository/productAPI";
 import { Type } from "../../api/repository/typeAPI";
 import Avatar from "../../components/Avatar";
@@ -18,10 +19,11 @@ type ProductProps = {
     types?: Type[];
     pathname: string;
     asPath?: string;
+    blogLinks?: BlogLink[];
 };
 
 const ProductDetailComponent: NextPage<ProductProps> = (props) => {
-    const { product, types, pathname, asPath } = props;
+    const { product, types, pathname, asPath, blogLinks } = props;
 
     const { setSize, size, color, setColor, amount, changeAmount, addToCart } =
         useProduct(product);
@@ -166,7 +168,7 @@ const ProductDetailComponent: NextPage<ProductProps> = (props) => {
                 </div>
             )}
 
-            <Footer />
+            <Footer blogLinks={blogLinks ?? []} />
         </>
     );
 };
@@ -179,8 +181,15 @@ ProductDetailComponent.getInitialProps = async ({
         const data = await Promise.all([
             await API.product.getProduct(query.slug as string),
             await API.type.gets(),
+            await API.blog_link.gets(),
         ]);
-        return { product: data[0].data, types: data[1].data, pathname, asPath };
+        return {
+            product: data[0].data,
+            types: data[1].data,
+            blogLinks: data[2].data,
+            pathname,
+            asPath,
+        };
     } catch {
         return { pathname, asPath };
     }

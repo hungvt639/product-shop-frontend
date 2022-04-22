@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useMemo } from "react";
 import API from "../../api";
+import { BlogLink } from "../../api/repository/blogLinkAPI";
 import { Type, TypeProduct } from "../../api/repository/typeAPI";
 import BreadcrumbComponent from "../../components/Breadcrumb";
 import Footer from "../../components/common/footer";
@@ -17,6 +18,7 @@ type ProductComponentProps = {
     types?: Type[];
     pathname: string;
     asPath?: string;
+    blogLinks?: BlogLink[];
 };
 
 const ProductComponent: NextPage<ProductComponentProps> = ({
@@ -24,6 +26,7 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
     types,
     pathname,
     asPath,
+    blogLinks,
 }) => {
     const breadcrumb = useMemo(() => {
         return [
@@ -72,7 +75,7 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer blogLinks={blogLinks ?? []} />
         </>
     );
 };
@@ -88,11 +91,13 @@ ProductComponent.getInitialProps = async ({
                 limit: 4,
             }),
             await API.type.gets(),
+            await API.blog_link.gets(),
         ]);
 
         return {
             products: data[0].data,
             types: data[1].data,
+            blogLinks: data[2].data,
             pathname,
             asPath,
         };

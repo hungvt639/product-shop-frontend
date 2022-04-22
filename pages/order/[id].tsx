@@ -6,6 +6,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { IoReturnUpBackOutline } from "react-icons/io5";
 import API from "../../api";
+import { BlogLink } from "../../api/repository/blogLinkAPI";
 import { Order } from "../../api/repository/orderAPI";
 import { Type } from "../../api/repository/typeAPI";
 import Footer from "../../components/common/footer";
@@ -21,10 +22,11 @@ type OrderProps = {
     types?: Type[];
     pathname: string;
     asPath?: string;
+    blogLinks?: BlogLink[];
 };
 
 const OrderDetailComponent: NextPage<OrderProps> = (props) => {
-    const { order, types, pathname, asPath } = props;
+    const { order, types, pathname, asPath, blogLinks } = props;
 
     return (
         <>
@@ -222,7 +224,7 @@ const OrderDetailComponent: NextPage<OrderProps> = (props) => {
                 </div>
             )}
 
-            <Footer />
+            <Footer blogLinks={blogLinks ?? []} />
         </>
     );
 };
@@ -236,8 +238,15 @@ OrderDetailComponent.getInitialProps = async ({
         const data = await Promise.all([
             await API.order.get(query.id as string),
             await API.type.gets(),
+            await API.blog_link.gets(),
         ]);
-        return { order: data[0].data, types: data[1].data, pathname, asPath };
+        return {
+            order: data[0].data,
+            types: data[1].data,
+            blogLinks: data[2].data,
+            pathname,
+            asPath,
+        };
     } catch {
         return { pathname, asPath };
     }
