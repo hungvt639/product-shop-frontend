@@ -65,7 +65,7 @@ const CartBase = (props: CartBaseProps) => {
                         </Link>
                         <div
                             onClick={() => reomteInCart(i)}
-                            className="absolute top-0 right-0 cursor-pointer"
+                            className="absolute top-0 right-0 px-2 rounded-sm cursor-pointer hover:text-white hover:bg-neutral-600"
                         >
                             X
                         </div>

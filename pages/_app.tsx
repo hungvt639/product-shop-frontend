@@ -1,6 +1,5 @@
 import "antd/dist/antd.css";
 import "../styles/globals.css";
-import "../styles/animation.css";
 import "../styles/globals.scss";
 import "../styles/responsive.scss";
 import "../styles/container.scss";
