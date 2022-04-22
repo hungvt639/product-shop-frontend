@@ -56,11 +56,15 @@ const MenuMin = (props: MenuMinProps) => {
                     </div>
                 </div>
                 <h1 className="text-lg mt-5">BẠN CẦN HỖ TRỢ?</h1>
-                <div className="flex items-center mt-5">
-                    <FcCallback className="text-2xl mr-3" />
-                    <span className="text-base font-semibold">
-                        Liên hệ: {_env.PHONE_NUMBER}
-                    </span>
+                <div>
+                    <Link href={`tel:${_env.PHONE_NUMBER}`}>
+                        <a className="flex items-center mt-5">
+                            <FcCallback className="text-2xl mr-3" />
+                            <span className="text-base font-semibold">
+                                Liên hệ: {_env.PHONE_NUMBER}
+                            </span>
+                        </a>
+                    </Link>
                 </div>
                 <div className="flex items-center mt-5">
                     <FcInvite className="text-2xl mr-3" />

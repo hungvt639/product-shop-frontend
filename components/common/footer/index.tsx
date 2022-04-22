@@ -14,7 +14,9 @@ const Footer = () => {
                     <BsTelephoneFill className="phone-icon mr-3" />
                     Hỗ trợ / Mua hàng:
                     <span className="text-red-500 ml-2">
-                        {_env.PHONE_NUMBER}
+                        <Link href={`tel:${_env.PHONE_NUMBER}`}>
+                            {_env.PHONE_NUMBER}
+                        </Link>
                     </span>
                 </div>
             </div>
@@ -63,9 +65,14 @@ const Footer = () => {
                             <div className="flex mb-2">
                                 <MdLocationPin /> Thái nguyên
                             </div>
-                            <div className="flex mb-2">
-                                <FiSmartphone /> {_env.PHONE_NUMBER}
-                            </div>
+                            <Link href={`tel:${_env.PHONE_NUMBER}`}>
+                                <a>
+                                    <div className="flex mb-2">
+                                        <FiSmartphone /> {_env.PHONE_NUMBER}
+                                    </div>
+                                </a>
+                            </Link>
+
                             <div className="flex">
                                 <AiOutlineMail /> {_env.EMAIL}
                             </div>
