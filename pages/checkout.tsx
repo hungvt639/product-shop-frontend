@@ -36,6 +36,11 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({
         setValues,
         values,
         createOrder,
+        addressValue,
+        districts,
+        provincials,
+        setAddressValue,
+        wards,
     } = useCheckout();
 
     return (
@@ -68,27 +73,31 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({
             </div>
             <div className="_max-width flex flex-wrap _checkout w-full mt-5 mb-16">
                 <div className="_left pr-10">
-                    {checkout === 0 ? (
-                        <div>
-                            <h1 className="text-base font-bold">
-                                Thông tin giao hàng
-                            </h1>
+                    <div className={!checkout ? "block" : "hidden"}>
+                        <h1 className="text-base font-bold">
+                            Thông tin giao hàng
+                        </h1>
 
-                            <ShipmentDetails
-                                values={values}
-                                setValues={setValues}
-                                setCheckout={setCheckout}
-                            />
-                        </div>
-                    ) : (
-                        <div>
-                            <PaymentMethods
-                                setShip={setShip}
-                                ship={ship}
-                                createOrder={createOrder}
-                            />
-                        </div>
-                    )}
+                        <ShipmentDetails
+                            {...{
+                                values,
+                                setValues,
+                                setCheckout,
+                                addressValue,
+                                districts,
+                                provincials,
+                                setAddressValue,
+                                wards,
+                            }}
+                        />
+                    </div>
+                    <div className={checkout ? "block" : "hidden"}>
+                        <PaymentMethods
+                            setShip={setShip}
+                            ship={ship}
+                            createOrder={createOrder}
+                        />
+                    </div>
                 </div>
                 <div className="pl-5 border-l border-solid border-neutral-400 _right">
                     <ProductCheckout carts={carts} ship={ship} />

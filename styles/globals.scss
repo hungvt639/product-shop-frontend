@@ -261,6 +261,11 @@
 }
 ._checkout {
     ._left {
+        .ant-select-selector {
+            border: none !important;
+            border-color: unset !important;
+            box-shadow: none !important;
+        }
         width: 60%;
         ._input {
             width: 100%;
@@ -276,7 +281,8 @@
                 margin-left: 9px;
                 margin-right: 9px;
             }
-            input {
+            input[type="text"],
+            input[type="number"] {
                 border: none;
                 touch-action: none;
                 box-shadow: none;

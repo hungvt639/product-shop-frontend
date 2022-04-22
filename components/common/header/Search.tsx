@@ -18,6 +18,7 @@ const Search = () => {
                 onSubmit={onSubmit}
             >
                 <input
+                    type="text"
                     onClick={defaultF}
                     onFocus={onShow}
                     value={value}

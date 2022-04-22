@@ -55,6 +55,7 @@ const SearchComponent: NextPage<SearchComponentProps> = (props) => {
                     onSubmit={onSubmit}
                 >
                     <input
+                        type="text"
                         value={
                             typeof value !== "undefined"
                                 ? value

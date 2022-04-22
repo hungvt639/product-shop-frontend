@@ -9,10 +9,13 @@ import notify from "../container/notify";
 import { AppState } from "../store";
 import action from "../store/actions";
 import { errorAPI } from "../utils/error";
+import useAddress from "./useAddress";
 
 const useCheckout = () => {
     const router = useRouter();
     const dispatch = useDispatch();
+    const { addressValue, districts, provincials, setAddressValue, wards } =
+        useAddress();
 
     const [checkout, setCheckout] = useState(0);
     const [ship, setShip] = useState<number>();
@@ -26,7 +29,8 @@ const useCheckout = () => {
     });
 
     const createOrder = useCallback(async () => {
-        if (carts.length && values.fullname && values.address && values.phone) {
+        const address = `${values.address}, ${addressValue.ward?.full_name}`;
+        if (carts.length && values.fullname && address && values.phone) {
             try {
                 const orderProducts = carts.map(
                     (cart) => new OrderProducts(cart)
@@ -34,6 +38,7 @@ const useCheckout = () => {
                 const res = await API.order.create({
                     orderProducts,
                     ...values,
+                    address,
                 });
                 dispatch(action.clearCart());
                 notify.success("Đơn hàng của bạn đã được tạo thành công");
@@ -42,7 +47,7 @@ const useCheckout = () => {
                 errorAPI(e);
             }
         }
-    }, [carts, dispatch, router, values]);
+    }, [addressValue.ward?.full_name, carts, dispatch, router, values]);
 
     return {
         checkout,
@@ -52,6 +57,11 @@ const useCheckout = () => {
         values,
         setValues,
         createOrder,
+        addressValue,
+        districts,
+        provincials,
+        setAddressValue,
+        wards,
     };
 };
 export default useCheckout;
