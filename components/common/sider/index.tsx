@@ -16,18 +16,21 @@ const Sider = (props: SiderProps) => {
         <div className="w-full _sider">
             <div className="_sider-large">
                 {types?.map((t) => (
-                    <div
-                        className={`text-base font-semibold py-2 px-2 border-b mr-9 ${
-                            asPath?.startsWith(route.SHOP + "/" + t.slug)
-                                ? " bg-stone-100"
-                                : ""
-                        }`}
-                        key={t._id}
-                    >
-                        <Link href={`${route.SHOP}/${t.slug}`}>
-                            <a>{t.name}</a>
-                        </Link>
-                    </div>
+                    <Link key={t._id} href={`${route.SHOP}/${t.slug}`}>
+                        <a>
+                            <div
+                                className={`text-base font-semibold py-2 px-2 border-b mr-9 ${
+                                    asPath?.startsWith(
+                                        route.SHOP + "/" + t.slug
+                                    )
+                                        ? " bg-stone-100"
+                                        : ""
+                                }`}
+                            >
+                                {t.name}
+                            </div>
+                        </a>
+                    </Link>
                 ))}
             </div>
             <div className="_sider-small">
@@ -43,18 +46,21 @@ const Sider = (props: SiderProps) => {
                     }`}
                 >
                     {types?.map((t) => (
-                        <div
-                            className={`text-base font-semibold py-2 px-2 border-b mr-9 ${
-                                asPath?.startsWith(route.SHOP + "/" + t.slug)
-                                    ? " bg-stone-100"
-                                    : ""
-                            }`}
-                            key={t._id}
-                        >
-                            <Link href={`${route.SHOP}/${t.slug}`}>
-                                <a>{t.name}</a>
-                            </Link>
-                        </div>
+                        <Link key={t._id} href={`${route.SHOP}/${t.slug}`}>
+                            <a>
+                                <div
+                                    className={`text-base font-semibold py-2 px-2 border-b mr-9 ${
+                                        asPath?.startsWith(
+                                            route.SHOP + "/" + t.slug
+                                        )
+                                            ? " bg-stone-100"
+                                            : ""
+                                    }`}
+                                >
+                                    {t.name}
+                                </div>
+                            </a>
+                        </Link>
                     ))}
                 </div>
             </div>

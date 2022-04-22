@@ -28,6 +28,7 @@ const HeaderMin = (props: HeaderMinProps) => {
                 show={showMenu}
                 types={types}
                 asPath={asPath}
+                setShowMenu={setShowMenu}
             />
             <div className="flex justify-between px-5 border-b pb-2">
                 <div className="text-2xl font-bold">

@@ -6,7 +6,7 @@ import Phone from "../../../public/img/phone.webp";
 import Policy from "../../../public/img/policy_icon_2.webp";
 import policy_icon_3 from "../../../public/img/policy_icon_3.webp";
 import Image from "next/image";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineCaretDown, AiOutlineShoppingCart } from "react-icons/ai";
 import Dropdown from "../../../container/Dropdown";
 import { Type } from "../../../api/repository/typeAPI";
 import React, { useMemo } from "react";
@@ -47,18 +47,21 @@ const Header = (props: HeaderProps) => {
         return (
             <menu className="flex flex-col border-t-2 border-solid border-gray-500 bg-white">
                 {types.map((type) => (
-                    <div
-                        className={`px-5 py-2 text-base border-t border-solid border-gray-300${
-                            asPath?.startsWith(route.SHOP + "/" + type.slug)
-                                ? " bg-stone-100"
-                                : ""
-                        }`}
-                        key={type._id}
-                    >
-                        <Link href={`${route.SHOP}/${type.slug}`}>
-                            {type.name}
-                        </Link>
-                    </div>
+                    <Link key={type._id} href={`${route.SHOP}/${type.slug}`}>
+                        <a>
+                            <div
+                                className={`px-5 py-2 text-base border-t border-solid border-gray-300${
+                                    asPath?.startsWith(
+                                        route.SHOP + "/" + type.slug
+                                    )
+                                        ? " bg-stone-100"
+                                        : ""
+                                }`}
+                            >
+                                {type.name}
+                            </div>
+                        </a>
+                    </Link>
                 ))}
             </menu>
         );
@@ -154,7 +157,12 @@ const Header = (props: HeaderProps) => {
                             }`}
                         >
                             <Dropdown overlay={menu}>
-                                <Link href={route.SHOP}>SHOP</Link>
+                                <Link href={route.SHOP}>
+                                    <a className="flex items-center">
+                                        SHOP
+                                        <AiOutlineCaretDown className="ml-1" />
+                                    </a>
+                                </Link>
                             </Dropdown>
                         </div>
                     </menu>

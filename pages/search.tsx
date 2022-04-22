@@ -26,7 +26,6 @@ const SearchComponent: NextPage<SearchComponentProps> = (props) => {
     const { pathname, asPath, searchValue, types, query } = props;
 
     const { searchRes, setValue, value } = useSearch(searchValue, query);
-    console.log("sear", searchRes);
 
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

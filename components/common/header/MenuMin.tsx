@@ -4,15 +4,16 @@ import route from "../../../config/route";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 import { FcCallback, FcInvite } from "react-icons/fc";
 import _env from "../../../config/_env";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 type MenuMinProps = {
     show: boolean;
     types: Type[];
     pathname: string;
     asPath?: string;
+    setShowMenu: Dispatch<SetStateAction<boolean>>;
 };
 const MenuMin = (props: MenuMinProps) => {
-    const { pathname, show, types, asPath } = props;
+    const { pathname, show, types, asPath, setShowMenu } = props;
 
     const [showType, setShowtype] = useState(false);
     return (
@@ -80,18 +81,22 @@ const MenuMin = (props: MenuMinProps) => {
                 </div>
                 <div>
                     {types?.map((t) => (
-                        <div
-                            className={`text-base font-semibold py-2 px-2 border-b${
-                                asPath?.startsWith(route.SHOP + "/" + t.slug)
-                                    ? " bg-stone-100"
-                                    : ""
-                            }`}
-                            key={t._id}
-                        >
-                            <Link href={`${route.SHOP}/${t.slug}`}>
-                                <a>{t.name}</a>
-                            </Link>
-                        </div>
+                        <Link key={t._id} href={`${route.SHOP}/${t.slug}`}>
+                            <a>
+                                <div
+                                    onClick={() => setShowMenu(false)}
+                                    className={`text-base font-semibold py-2 px-2 border-b${
+                                        asPath?.startsWith(
+                                            route.SHOP + "/" + t.slug
+                                        )
+                                            ? " bg-stone-100"
+                                            : ""
+                                    }`}
+                                >
+                                    {t.name}
+                                </div>
+                            </a>
+                        </Link>
                     ))}
                 </div>
             </menu>
