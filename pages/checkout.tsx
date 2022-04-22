@@ -119,7 +119,7 @@ CheckoutComponent.getInitialProps = async ({
     try {
         const data = await Promise.all([
             await API.type.gets(),
-            await API.blog_link.gets(),
+            await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
             types: data[0].data,

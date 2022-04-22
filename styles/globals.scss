@@ -361,3 +361,18 @@
         }
     }
 }
+._pages {
+    ._left {
+        width: 30%;
+        padding-right: 15px;
+    }
+    ._right {
+        width: 70%;
+    }
+    ._small {
+        display: none;
+    }
+    .__large {
+        display: block;
+    }
+}

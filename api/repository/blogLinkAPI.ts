@@ -1,13 +1,16 @@
 import { AxiosResponse } from "axios";
+import utils from "../../utils";
 import AxiosAPI from "../config";
+import { SearchBody } from "../interface";
 
 class BlogLinkAPI {
     private resource = "apiv1/blog-link";
 
-    public gets = (): Promise<AxiosResponse<BlogLink[]>> => {
-        return AxiosAPI(true).get(`${this.resource}`);
+    public gets = (obj?: SearchBody): Promise<AxiosResponse<BlogLink[]>> => {
+        const str = utils.objToSearch(obj);
+        return AxiosAPI(true).get(`${this.resource}${str}`);
     };
-    public get = (slug: string): Promise<AxiosResponse<BlogLink[]>> => {
+    public get = (slug: string): Promise<AxiosResponse<BlogLink>> => {
         return AxiosAPI(true).get(`${this.resource}/${slug}`);
     };
 }

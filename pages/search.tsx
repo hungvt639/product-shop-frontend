@@ -100,7 +100,7 @@ SearchComponent.getInitialProps = async ({
         const data = await Promise.all([
             query.search ? await API.product.search(query) : undefined,
             await API.type.gets(),
-            await API.blog_link.gets(),
+            await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
             searchValue: data[0]?.data ?? undefined,

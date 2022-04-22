@@ -181,7 +181,7 @@ ProductDetailComponent.getInitialProps = async ({
         const data = await Promise.all([
             await API.product.getProduct(query.slug as string),
             await API.type.gets(),
-            await API.blog_link.gets(),
+            await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
             product: data[0].data,

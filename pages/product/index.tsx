@@ -91,7 +91,7 @@ ProductComponent.getInitialProps = async ({
                 limit: 4,
             }),
             await API.type.gets(),
-            await API.blog_link.gets(),
+            await API.blog_link.gets({ select: "_id name slug" }),
         ]);
 
         return {

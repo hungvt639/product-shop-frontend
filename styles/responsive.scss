@@ -84,4 +84,15 @@
             }
         }
     }
+    ._pages {
+        ._left {
+            padding-right: 0;
+            ._small {
+                display: block;
+            }
+            ._large {
+                display: none;
+            }
+        }
+    }
 }

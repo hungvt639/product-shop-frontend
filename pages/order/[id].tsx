@@ -238,7 +238,7 @@ OrderDetailComponent.getInitialProps = async ({
         const data = await Promise.all([
             await API.order.get(query.id as string),
             await API.type.gets(),
-            await API.blog_link.gets(),
+            await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
             order: data[0].data,

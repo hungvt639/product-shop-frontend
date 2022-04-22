@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Type } from "../../../api/repository/typeAPI";
 import route from "../../../config/route";
 import { BsChevronDown } from "react-icons/bs";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import ClickDropdown from "../../../container/ClickDorpdown";
 type SiderProps = {
     types: Type[];
     asPath?: string;
@@ -12,9 +13,10 @@ type SiderProps = {
 const Sider = (props: SiderProps) => {
     const { types, asPath } = props;
     const [showMenu, setShowMenu] = useState(false);
-    return (
-        <div className="w-full _sider">
-            <div className="_sider-large">
+
+    const Menu = useMemo(() => {
+        return (
+            <>
                 {types?.map((t) => (
                     <Link key={t._id} href={`${route.SHOP}/${t.slug}`}>
                         <a>
@@ -32,37 +34,21 @@ const Sider = (props: SiderProps) => {
                         </a>
                     </Link>
                 ))}
-            </div>
+            </>
+        );
+    }, [asPath, types]);
+    return (
+        <div className="w-full _sider">
+            <div className="_sider-large">{Menu}</div>
             <div className="_sider-small">
-                <div
-                    onClick={() => setShowMenu(!showMenu)}
-                    className="flex justify-between items-center bg-neutral-200 font-bold py-1 px-3"
-                >
-                    <h1>DANH MỤC SẢN PHẨM</h1> <BsChevronDown />
-                </div>
-                <div
-                    className={`_small${
-                        showMenu ? " _show-menu" : " _not-show-menu"
-                    }`}
-                >
-                    {types?.map((t) => (
-                        <Link key={t._id} href={`${route.SHOP}/${t.slug}`}>
-                            <a>
-                                <div
-                                    className={`text-base font-semibold py-2 px-2 border-b mr-9 ${
-                                        asPath?.startsWith(
-                                            route.SHOP + "/" + t.slug
-                                        )
-                                            ? " bg-stone-100"
-                                            : ""
-                                    }`}
-                                >
-                                    {t.name}
-                                </div>
-                            </a>
-                        </Link>
-                    ))}
-                </div>
+                <ClickDropdown overlay={Menu}>
+                    <div
+                        onClick={() => setShowMenu(!showMenu)}
+                        className="flex justify-between items-center bg-neutral-200 font-bold py-1 px-3"
+                    >
+                        <h1>DANH MỤC SẢN PHẨM</h1> <BsChevronDown />
+                    </div>
+                </ClickDropdown>
             </div>
         </div>
     );
