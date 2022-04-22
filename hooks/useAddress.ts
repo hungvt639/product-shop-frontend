@@ -17,7 +17,7 @@ const useAddress = () => {
     const getProvincials = useCallback(async () => {
         try {
             const res = await API.countries.getProvincials();
-            setProvincials(res.data);
+            setProvincials(res.data.sort((a, b) => (a.name > b.name ? 1 : -1)));
         } catch {
             setProvincials([]);
         }
@@ -25,7 +25,7 @@ const useAddress = () => {
     const getDistricts = useCallback(async (id: string) => {
         try {
             const res = await API.countries.getDistricts(id);
-            setDistricts(res.data);
+            setDistricts(res.data.sort((a, b) => (a.name > b.name ? 1 : -1)));
         } catch {
             setDistricts([]);
         }
@@ -33,7 +33,7 @@ const useAddress = () => {
     const getWards = useCallback(async (id: string) => {
         try {
             const res = await API.countries.getWards(id);
-            setWards(res.data);
+            setWards(res.data.sort((a, b) => (a.name > b.name ? 1 : -1)));
         } catch {
             setWards([]);
         }
