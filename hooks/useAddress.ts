@@ -14,8 +14,6 @@ const useAddress = () => {
     const [wards, setWards] = useState<Ward[]>([]);
     const [addressValue, setAddressValue] = useState<ValueAddress>({});
 
-    console.log("addressValue", addressValue);
-
     const getProvincials = useCallback(async () => {
         try {
             const res = await API.countries.getProvincials();
