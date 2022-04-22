@@ -27,11 +27,18 @@ type SearchComponentProps = {
 const SearchComponent: NextPage<SearchComponentProps> = (props) => {
     const { pathname, asPath, searchValue, types, query, blogLinks } = props;
 
-    const { searchRes, setValue, value } = useSearch(searchValue, query);
+    const { searchRes, setValue, value, onSubmit } = useSearch(
+        searchValue,
+        query
+    );
 
-    const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    }, []);
+    const onSubmitDefault = useCallback(
+        (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            onSubmit();
+        },
+        [onSubmit]
+    );
     const breadcrumb = useMemo(() => {
         return [
             {
@@ -53,7 +60,7 @@ const SearchComponent: NextPage<SearchComponentProps> = (props) => {
                 </h1>
                 <form
                     className="flex flex-row overflow-hidden rounded-sm max-w-xl mx-auto mt-5"
-                    onSubmit={onSubmit}
+                    onSubmit={onSubmitDefault}
                 >
                     <input
                         type="text"

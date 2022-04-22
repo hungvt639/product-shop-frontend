@@ -3,9 +3,12 @@ import { FocusEvent, useCallback, useEffect, useState } from "react";
 const useSearchHeader = () => {
     const [show, setShow] = useState(false);
 
-    const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    }, []);
+    const onSubmitDefault = useCallback(
+        (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+        },
+        []
+    );
 
     const close = useCallback(() => {
         setShow(false);
@@ -31,6 +34,6 @@ const useSearchHeader = () => {
         };
     }, [close, show]);
 
-    return { onSubmit, show, onShow, defaultF };
+    return { onSubmitDefault, show, onShow, defaultF };
 };
 export default useSearchHeader;

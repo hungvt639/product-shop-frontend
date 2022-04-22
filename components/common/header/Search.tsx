@@ -8,14 +8,14 @@ import useSearchHeader from "./hook/useSearchhHeader";
 import SearchItemComponent from "../../SearchItem";
 
 const Search = () => {
-    const { setValue, value, searchRes } = useSearch();
-    const { defaultF, onShow, onSubmit, show } = useSearchHeader();
+    const { setValue, value, searchRes, onSubmit } = useSearch();
+    const { defaultF, onShow, onSubmitDefault, show } = useSearchHeader();
 
     return (
         <div className="relative max-w-xs w-full _search">
             <form
                 className="flex flex-row overflow-hidden rounded-md"
-                onSubmit={onSubmit}
+                onSubmit={onSubmitDefault}
             >
                 <input
                     type="text"
@@ -26,7 +26,7 @@ const Search = () => {
                     className="rounded-l-md"
                     placeholder="Tìm kiếm sản phẩm..."
                 />
-                <button className="text-white px-4">
+                <button onClick={onSubmit} className="text-white px-4">
                     <AiOutlineSearch />
                 </button>
             </form>
