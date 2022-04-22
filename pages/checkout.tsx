@@ -96,6 +96,7 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({
                             setShip={setShip}
                             ship={ship}
                             createOrder={createOrder}
+                            setCheckout={setCheckout}
                         />
                     </div>
                 </div>

@@ -8,10 +8,11 @@ type PaymentMethodsProps = {
     ship?: number;
     setShip: Dispatch<SetStateAction<number | undefined>>;
     createOrder: () => Promise<void>;
+    setCheckout: Dispatch<SetStateAction<number>>;
 };
 
 const PaymentMethodsComponent = (props: PaymentMethodsProps) => {
-    const { ship, setShip, createOrder } = props;
+    const { ship, setShip, createOrder, setCheckout } = props;
     const [loading, setLoading] = useState(false);
 
     const submit = async () => {
@@ -52,7 +53,9 @@ const PaymentMethodsComponent = (props: PaymentMethodsProps) => {
             </div>
 
             <div className="mt-5 flex justify-between items-center">
-                <p className="cursor-pointer">Quay lại thông tin giao hàng</p>
+                <p onClick={() => setCheckout(0)} className="cursor-pointer">
+                    Quay lại thông tin giao hàng
+                </p>
                 <button
                     onClick={submit}
                     className="w-64 py-4 rounded text-white bg-sky-600"

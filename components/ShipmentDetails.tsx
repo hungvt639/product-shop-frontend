@@ -46,8 +46,6 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
         wards,
     } = props;
 
-    // const { addressValue, districts, provincials, setAddressValue, wards } =
-    //     useAddress();
     const [vali, setVali] = useState({
         fullname: false,
         address: false,
@@ -120,7 +118,7 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
 
                 <div className="_phone">
                     <div className="_input">
-                        <label htmlFor="phone">Số điện thoại *</label>
+                        <label htmlFor="phone">Điện thoại *</label>
                         <input
                             type="number"
                             value={values.phone}
@@ -153,7 +151,7 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
                 </div>
             </div>
             <div className="flex flex-wrap mb-5">
-                <div className="w-1/3">
+                <div className="w-1/3 pr-2">
                     <div className="_input">
                         <label htmlFor="provincial">Tỉnh*</label>
                         <Select
@@ -178,7 +176,7 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
                         </Select>
                     </div>
                 </div>
-                <div className="w-1/3">
+                <div className="w-1/3 px-1">
                     <div className="_input">
                         <label htmlFor="district">Huyện*</label>
                         <Select
@@ -203,7 +201,7 @@ const ShipmentDetailsComponent = (props: ShipmentDetailsProps) => {
                         </Select>
                     </div>
                 </div>
-                <div className="w-1/3">
+                <div className="w-1/3 pl-2">
                     <div className="_input">
                         <label htmlFor="ward">Xã*</label>
                         <Select
