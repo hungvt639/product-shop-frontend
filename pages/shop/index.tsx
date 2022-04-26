@@ -108,7 +108,7 @@ ShopComponent.getInitialProps = async ({
                 ...query,
             }),
             await API.type.gets(),
-            await API.blog_link.gets(),
+            await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
             products: data[0].data,

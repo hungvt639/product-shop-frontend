@@ -1,5 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import type { NextPage, NextPageContext } from "next";
+import type {
+    NextPage,
+    NextPageContext,
+    GetServerSidePropsContext,
+} from "next";
 import Head from "next/head";
 import Link from "next/link";
 import API from "../api";
@@ -81,3 +85,20 @@ HomeComponent.getInitialProps = async ({
         return { pathname, asPath };
     }
 };
+
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//     console.log("c", context);
+
+//     // const res = await fetch(`https://...`)
+//     // const data = await res.json()
+
+//     // if (!data) {
+//     //   return {
+//     //     notFound: true,
+//     //   }
+//     // }
+
+//     return {
+//         props: {}, // will be passed to the page component as props
+//     };
+// }

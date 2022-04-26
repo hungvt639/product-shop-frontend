@@ -1,4 +1,9 @@
-import { NextPage, NextPageContext } from "next";
+import {
+    GetServerSideProps,
+    GetServerSidePropsContext,
+    NextPage,
+    NextPageContext,
+} from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
@@ -21,6 +26,7 @@ type TypeProductProps = {
     query?: SearchBody;
     pathname: string;
     asPath?: string;
+    // resolvedUrl: string;
     blogLinks?: BlogLink[];
 };
 
@@ -30,6 +36,7 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
     query,
     pathname,
     asPath,
+    // resolvedUrl,
     blogLinks,
 }) => {
     const router = useRouter();
@@ -98,7 +105,7 @@ TypeProductComponent.getInitialProps = async ({
                 ...query,
             }),
             await API.type.gets(),
-            await API.blog_link.gets(),
+            await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
             type: data[0].data,
@@ -114,3 +121,31 @@ TypeProductComponent.getInitialProps = async ({
 };
 
 export default TypeProductComponent;
+
+// export const getServerSideProps: GetServerSideProps<TypeProductProps> = async ({
+//     query,
+//     resolvedUrl,
+// }: GetServerSidePropsContext) => {
+
+//     try {
+//         const data = await Promise.all([
+//             await API.type.get(query.slug as string, {
+//                 select: "_id name slug sold price img img1 isSale",
+//                 ...query,
+//             }),
+//             await API.type.gets(),
+//             await API.blog_link.gets(),
+//         ]);
+//         return {
+//             props: {
+//                 type: data[0].data,
+//                 types: data[1].data,
+//                 blogLinks: data[2].data,
+//                 query,
+//                 resolvedUrl,
+//             },
+//         };
+//     } catch {
+//         return { props: { resolvedUrl } };
+//     }
+// };
