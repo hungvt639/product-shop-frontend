@@ -1,4 +1,4 @@
-import { NextPage, NextPageContext } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -16,16 +16,14 @@ import _env from "../../config/_env";
 type ProductComponentProps = {
     products: TypeProduct[];
     types?: Type[];
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
     blogLinks?: BlogLink[];
 };
 
 const ProductComponent: NextPage<ProductComponentProps> = ({
     products,
     types,
-    pathname,
-    asPath,
+    resolvedUrl,
     blogLinks,
 }) => {
     const breadcrumb = useMemo(() => {
@@ -42,11 +40,11 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
+            <Header types={types ?? []} resolvedUrl={resolvedUrl} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex flex-wrap _shops">
                 <div className="_left">
-                    <Sider types={types ?? []} asPath={asPath} />
+                    <Sider types={types ?? []} resolvedUrl={resolvedUrl} />
                 </div>
                 <div className="_right">
                     <div>
@@ -80,10 +78,36 @@ const ProductComponent: NextPage<ProductComponentProps> = ({
     );
 };
 export default ProductComponent;
-ProductComponent.getInitialProps = async ({
-    pathname,
-    asPath,
-}: NextPageContext) => {
+
+// ProductComponent.getInitialProps = async ({
+//     pathname,
+//     asPath,
+// }: NextPageContext) => {
+//     try {
+//         const data = await Promise.all([
+//             await API.type.getsProduct({
+//                 select: "_id name slug sold price img img1 isSale",
+//                 limit: 4,
+//             }),
+//             await API.type.gets(),
+//             await API.blog_link.gets({ select: "_id name slug" }),
+//         ]);
+
+//         return {
+//             products: data[0].data,
+//             types: data[1].data,
+//             blogLinks: data[2].data,
+//             pathname,
+//             asPath,
+//         };
+//     } catch {
+//         return { products: [], resolvedUrl };
+//     }
+// };
+
+export const getServerSideProps: GetServerSideProps<
+    ProductComponentProps
+> = async ({ query, resolvedUrl }: GetServerSidePropsContext) => {
     try {
         const data = await Promise.all([
             await API.type.getsProduct({
@@ -93,15 +117,15 @@ ProductComponent.getInitialProps = async ({
             await API.type.gets(),
             await API.blog_link.gets({ select: "_id name slug" }),
         ]);
-
         return {
-            products: data[0].data,
-            types: data[1].data,
-            blogLinks: data[2].data,
-            pathname,
-            asPath,
+            props: {
+                products: data[0].data,
+                types: data[1].data,
+                blogLinks: data[2].data,
+                resolvedUrl,
+            },
         };
     } catch {
-        return { products: [], pathname, asPath };
+        return { props: { resolvedUrl, products: [] } };
     }
 };

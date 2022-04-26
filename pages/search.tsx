@@ -1,4 +1,9 @@
-import { NextPage, NextPageContext } from "next";
+import {
+    GetServerSideProps,
+    GetServerSidePropsContext,
+    NextPage,
+    NextPageContext,
+} from "next";
 import Head from "next/head";
 import { Fragment, useCallback, useEffect, useMemo } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -17,15 +22,14 @@ import useSearch from "../hooks/useSearch";
 
 type SearchComponentProps = {
     types?: Type[];
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
     searchValue?: SearchResponse;
     query: SearchBody;
     blogLinks?: BlogLink[];
 };
 
 const SearchComponent: NextPage<SearchComponentProps> = (props) => {
-    const { pathname, asPath, searchValue, types, query, blogLinks } = props;
+    const { resolvedUrl, searchValue, types, query, blogLinks } = props;
 
     const { searchRes, setValue, value, onSubmit } = useSearch(
         searchValue,
@@ -52,7 +56,7 @@ const SearchComponent: NextPage<SearchComponentProps> = (props) => {
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} pathname={pathname} asPath={asPath} />{" "}
+            <Header types={types ?? []} resolvedUrl={resolvedUrl} />{" "}
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width">
                 <h1 className="text-center font-bold text-2xl mt-10">
@@ -98,11 +102,35 @@ const SearchComponent: NextPage<SearchComponentProps> = (props) => {
     );
 };
 
-SearchComponent.getInitialProps = async ({
-    query,
-    pathname,
-    asPath,
-}: NextPageContext) => {
+// SearchComponent.getInitialProps = async ({
+//     query,
+//     pathname,
+//     asPath,
+// }: NextPageContext) => {
+//     try {
+//         const data = await Promise.all([
+//             query.search ? await API.product.search(query) : undefined,
+//             await API.type.gets(),
+//             await API.blog_link.gets({ select: "_id name slug" }),
+//         ]);
+//         return {
+//             searchValue: data[0]?.data ?? undefined,
+//             types: data[1].data,
+//             blogLinks: data[2]?.data,
+//             pathname,
+//             asPath,
+//             query,
+//         };
+//     } catch {
+//         return { resolvedUrl, query };
+//     }
+// };
+
+export default SearchComponent;
+
+export const getServerSideProps: GetServerSideProps<
+    SearchComponentProps
+> = async ({ query, resolvedUrl }: GetServerSidePropsContext) => {
     try {
         const data = await Promise.all([
             query.search ? await API.product.search(query) : undefined,
@@ -110,16 +138,15 @@ SearchComponent.getInitialProps = async ({
             await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
-            searchValue: data[0]?.data ?? undefined,
-            types: data[1].data,
-            blogLinks: data[2]?.data,
-            pathname,
-            asPath,
-            query,
+            props: {
+                searchValue: data[0]?.data ?? undefined,
+                types: data[1].data,
+                blogLinks: data[2]?.data,
+                resolvedUrl,
+                query,
+            },
         };
     } catch {
-        return { pathname, asPath, query };
+        return { props: { resolvedUrl, query } };
     }
 };
-
-export default SearchComponent;

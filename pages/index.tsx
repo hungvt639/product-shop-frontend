@@ -3,6 +3,7 @@ import type {
     NextPage,
     NextPageContext,
     GetServerSidePropsContext,
+    GetServerSideProps,
 } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -23,8 +24,7 @@ type HomeProps = {
     carousels?: Carousel[];
     products?: Pagination<Product>;
     types?: Type[];
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
     blogLinks?: BlogLink[];
 };
 
@@ -32,8 +32,7 @@ const HomeComponent: NextPage<HomeProps> = ({
     carousels,
     products,
     types,
-    pathname,
-    asPath,
+    resolvedUrl,
     blogLinks,
 }: HomeProps) => {
     return (
@@ -41,7 +40,7 @@ const HomeComponent: NextPage<HomeProps> = ({
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
+            <Header types={types ?? []} resolvedUrl={resolvedUrl} />
             <CarouselComponent carousels={carousels ?? []} />
             <h1 className="text-center text-4xl font-bold my-9">
                 <Link href={`${route.SHOP}?sort=-sold&page=1&limit=20`}>
@@ -59,10 +58,37 @@ const HomeComponent: NextPage<HomeProps> = ({
 
 export default HomeComponent;
 
-HomeComponent.getInitialProps = async ({
-    pathname,
-    asPath,
-}: NextPageContext) => {
+// HomeComponent.getInitialProps = async ({
+//     pathname,
+//     asPath,
+// }: NextPageContext) => {
+//     try {
+//         const data = await Promise.all([
+//             await API.product.gets({
+//                 select: "_id name slug sold price img img1 isSale",
+//             }),
+//             await API.carousel.get(),
+//             await API.type.gets(),
+//             await API.blog_link.gets({ select: "_id name slug" }),
+//         ]);
+
+//         return {
+//             carousels: data[1].data,
+//             products: data[0].data,
+//             types: data[2].data,
+//             blogLinks: data[3].data,
+//             pathname,
+//             asPath,
+//         };
+//     } catch {
+//         return { resolvedUrl };
+//     }
+// };
+
+export const getServerSideProps: GetServerSideProps<HomeProps> = async ({
+    query,
+    resolvedUrl,
+}: GetServerSidePropsContext) => {
     try {
         const data = await Promise.all([
             await API.product.gets({
@@ -72,33 +98,16 @@ HomeComponent.getInitialProps = async ({
             await API.type.gets(),
             await API.blog_link.gets({ select: "_id name slug" }),
         ]);
-
         return {
-            carousels: data[1].data,
-            products: data[0].data,
-            types: data[2].data,
-            blogLinks: data[3].data,
-            pathname,
-            asPath,
+            props: {
+                carousels: data[1].data,
+                products: data[0].data,
+                types: data[2].data,
+                blogLinks: data[3].data,
+                resolvedUrl,
+            },
         };
     } catch {
-        return { pathname, asPath };
+        return { props: { resolvedUrl } };
     }
 };
-
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//     console.log("c", context);
-
-//     // const res = await fetch(`https://...`)
-//     // const data = await res.json()
-
-//     // if (!data) {
-//     //   return {
-//     //     notFound: true,
-//     //   }
-//     // }
-
-//     return {
-//         props: {}, // will be passed to the page component as props
-//     };
-// }

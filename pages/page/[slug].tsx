@@ -1,4 +1,4 @@
-import { NextPage, NextPageContext } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -15,14 +15,13 @@ import ClickDropdown from "../../container/ClickDorpdown";
 
 type BlogLinkComponentProps = {
     types?: Type[];
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
     blogLinks?: BlogLink[];
     blog?: BlogLink;
 };
 
 const BlogLinkComponent: NextPage<BlogLinkComponentProps> = (props) => {
-    const { pathname, asPath, blogLinks, types, blog } = props;
+    const { resolvedUrl, blogLinks, types, blog } = props;
     const breadcrumb = useMemo(() => {
         return [
             {
@@ -50,7 +49,7 @@ const BlogLinkComponent: NextPage<BlogLinkComponentProps> = (props) => {
                         <a>
                             <div
                                 className={`text-base font-semibold py-1 px-2${
-                                    asPath?.startsWith(
+                                    resolvedUrl.startsWith(
                                         route.PAGE + "/" + blogLink.slug
                                     )
                                         ? " bg-stone-100"
@@ -64,14 +63,14 @@ const BlogLinkComponent: NextPage<BlogLinkComponentProps> = (props) => {
                 ))}
             </div>
         );
-    }, [asPath, blogLinks]);
+    }, [resolvedUrl, blogLinks]);
 
     return (
         <>
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
+            <Header types={types ?? []} resolvedUrl={resolvedUrl} />
             <BreadcrumbComponent data={breadcrumb} />
 
             <div className="_max-width flex flex-wrap _pages">
@@ -107,11 +106,33 @@ const BlogLinkComponent: NextPage<BlogLinkComponentProps> = (props) => {
     );
 };
 
-BlogLinkComponent.getInitialProps = async ({
-    query,
-    pathname,
-    asPath,
-}: NextPageContext) => {
+// BlogLinkComponent.getInitialProps = async ({
+//     query,
+//     pathname,
+//     asPath,
+// }: NextPageContext) => {
+//     try {
+//         const data = await Promise.all([
+//             await API.type.gets(),
+//             await API.blog_link.gets({ select: "_id name slug" }),
+//             await API.blog_link.get(query.slug as string),
+//         ]);
+//         return {
+//             types: data[0].data,
+//             blogLinks: data[1].data,
+//             blog: data[2].data,
+//             pathname,
+//             asPath,
+//         };
+//     } catch {
+//         return { resolvedUrl };
+//     }
+// };
+export default BlogLinkComponent;
+
+export const getServerSideProps: GetServerSideProps<
+    BlogLinkComponentProps
+> = async ({ query, resolvedUrl }: GetServerSidePropsContext) => {
     try {
         const data = await Promise.all([
             await API.type.gets(),
@@ -119,14 +140,14 @@ BlogLinkComponent.getInitialProps = async ({
             await API.blog_link.get(query.slug as string),
         ]);
         return {
-            types: data[0].data,
-            blogLinks: data[1].data,
-            blog: data[2].data,
-            pathname,
-            asPath,
+            props: {
+                types: data[0].data,
+                blogLinks: data[1].data,
+                blog: data[2].data,
+                resolvedUrl,
+            },
         };
     } catch {
-        return { pathname, asPath };
+        return { props: { resolvedUrl } };
     }
 };
-export default BlogLinkComponent;

@@ -37,12 +37,11 @@ const infos = [
 
 type HeaderProps = {
     types: Type[];
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
 };
 const Header = (props: HeaderProps) => {
     const carts = useSelector((s: AppState) => s.cart.carts);
-    const { types, pathname, asPath } = props;
+    const { types, resolvedUrl } = props;
     const menu = useMemo(() => {
         return (
             <menu className="flex flex-col border-t-2 border-solid border-gray-500 bg-white">
@@ -51,7 +50,7 @@ const Header = (props: HeaderProps) => {
                         <a>
                             <div
                                 className={`px-5 py-2 text-base border-t border-solid border-gray-300${
-                                    asPath?.startsWith(
+                                    resolvedUrl?.startsWith(
                                         route.SHOP + "/" + type.slug
                                     )
                                         ? " bg-stone-100"
@@ -65,11 +64,11 @@ const Header = (props: HeaderProps) => {
                 ))}
             </menu>
         );
-    }, [asPath, types]);
+    }, [resolvedUrl, types]);
 
     return (
         <header className="w-full _header py-5">
-            <HeaderMin pathname={pathname} types={types} asPath={asPath} />
+            <HeaderMin resolvedUrl={resolvedUrl} types={types} />
             <div className="_max-width w-full flex flex-col">
                 <div className="flex w-full pr-5">
                     <div className="_image-logo">
@@ -133,7 +132,7 @@ const Header = (props: HeaderProps) => {
                     <menu className="flex items-center">
                         <div
                             className={`text-base font-semibold mr-5${
-                                pathname === route.HOME
+                                resolvedUrl === route.HOME
                                     ? " border-b-4  border-stone-700"
                                     : ""
                             }`}
@@ -142,7 +141,7 @@ const Header = (props: HeaderProps) => {
                         </div>
                         <div
                             className={`text-base font-semibold mr-5${
-                                pathname === route.PRODUCT
+                                resolvedUrl === route.PRODUCT
                                     ? " border-b-4 border-stone-700"
                                     : ""
                             }`}
@@ -151,7 +150,7 @@ const Header = (props: HeaderProps) => {
                         </div>
                         <div
                             className={`text-base font-semibold${
-                                pathname.startsWith(route.SHOP)
+                                resolvedUrl.startsWith(route.SHOP)
                                     ? " border-b-4 border-stone-700"
                                     : ""
                             }`}

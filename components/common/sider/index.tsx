@@ -7,11 +7,11 @@ import { useMemo, useState } from "react";
 import ClickDropdown from "../../../container/ClickDorpdown";
 type SiderProps = {
     types: Type[];
-    asPath?: string;
+    resolvedUrl: string;
 };
 
 const Sider = (props: SiderProps) => {
-    const { types, asPath } = props;
+    const { types, resolvedUrl } = props;
     const [showMenu, setShowMenu] = useState(false);
 
     const Menu = useMemo(() => {
@@ -22,7 +22,7 @@ const Sider = (props: SiderProps) => {
                         <a>
                             <div
                                 className={`text-base font-semibold py-2 px-2 border-b mr-9 ${
-                                    asPath?.startsWith(
+                                    resolvedUrl.startsWith(
                                         route.SHOP + "/" + t.slug
                                     )
                                         ? " bg-stone-100"
@@ -36,7 +36,7 @@ const Sider = (props: SiderProps) => {
                 ))}
             </>
         );
-    }, [asPath, types]);
+    }, [resolvedUrl, types]);
     return (
         <div className="w-full _sider">
             <div className="_sider-large">{Menu}</div>

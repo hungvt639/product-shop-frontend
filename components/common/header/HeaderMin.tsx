@@ -13,9 +13,9 @@ import MenuMin from "./MenuMin";
 import Dropdown from "../../../container/Dropdown";
 import CartBase from "./CartBase";
 
-type HeaderMinProps = { types: Type[]; pathname: string; asPath?: string };
+type HeaderMinProps = { types: Type[]; resolvedUrl: string };
 const HeaderMin = (props: HeaderMinProps) => {
-    const { pathname, types, asPath } = props;
+    const { resolvedUrl, types } = props;
 
     const carts = useSelector((s: AppState) => s.cart.carts);
 
@@ -24,10 +24,9 @@ const HeaderMin = (props: HeaderMinProps) => {
     return (
         <div className="_header-min flex-col">
             <MenuMin
-                pathname={pathname}
+                resolvedUrl={resolvedUrl}
                 show={showMenu}
                 types={types}
-                asPath={asPath}
                 setShowMenu={setShowMenu}
             />
             <div className="flex justify-between px-5 border-b pb-2">

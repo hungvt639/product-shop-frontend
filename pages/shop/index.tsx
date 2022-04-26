@@ -1,5 +1,5 @@
 import { Select } from "antd";
-import { NextPage, NextPageContext } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import API from "../../api";
@@ -22,16 +22,14 @@ type ShopProps = {
     products?: Pagination<Product>;
     types?: Type[];
     query?: SearchBody;
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
     blogLinks?: BlogLink[];
 };
 const ShopComponent: NextPage<ShopProps> = ({
     products,
     types,
     query,
-    pathname,
-    asPath,
+    resolvedUrl,
     blogLinks,
 }) => {
     const router = useRouter();
@@ -57,11 +55,11 @@ const ShopComponent: NextPage<ShopProps> = ({
     };
     return (
         <>
-            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
+            <Header types={types ?? []} resolvedUrl={resolvedUrl} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex flex-wrap _shops">
                 <div className="_left">
-                    <Sider types={types ?? []} asPath={asPath} />
+                    <Sider types={types ?? []} resolvedUrl={resolvedUrl} />
                 </div>
                 <div className="_right">
                     <div className="flex px-5 justify-between">
@@ -96,11 +94,39 @@ const ShopComponent: NextPage<ShopProps> = ({
     );
 };
 
-ShopComponent.getInitialProps = async ({
+// ShopComponent.getInitialProps = async ({
+//     query,
+//     pathname,
+//     asPath,
+// }: NextPageContext) => {
+//     try {
+//         const data = await Promise.all([
+//             await API.product.gets({
+//                 select: "_id name slug sold price img img1 isSale",
+//                 ...query,
+//             }),
+//             await API.type.gets(),
+//             await API.blog_link.gets({ select: "_id name slug" }),
+//         ]);
+//         return {
+//             products: data[0].data,
+//             types: data[1].data,
+//             blogLinks: data[2].data,
+//             query,
+//             pathname,
+//             asPath,
+//         };
+//     } catch {
+//         return { resolvedUrl };
+//     }
+// };
+
+export default ShopComponent;
+
+export const getServerSideProps: GetServerSideProps<ShopProps> = async ({
     query,
-    pathname,
-    asPath,
-}: NextPageContext) => {
+    resolvedUrl,
+}: GetServerSidePropsContext) => {
     try {
         const data = await Promise.all([
             await API.product.gets({
@@ -111,16 +137,15 @@ ShopComponent.getInitialProps = async ({
             await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
-            products: data[0].data,
-            types: data[1].data,
-            blogLinks: data[2].data,
-            query,
-            pathname,
-            asPath,
+            props: {
+                products: data[0].data,
+                types: data[1].data,
+                blogLinks: data[2].data,
+                query,
+                resolvedUrl,
+            },
         };
     } catch {
-        return { pathname, asPath };
+        return { props: { resolvedUrl, query } };
     }
 };
-
-export default ShopComponent;

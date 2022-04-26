@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import { Image, Steps, Tag } from "antd";
-import { NextPage, NextPageContext } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { IoReturnUpBackOutline } from "react-icons/io5";
@@ -20,20 +20,19 @@ const { Step } = Steps;
 type OrderProps = {
     order?: Order;
     types?: Type[];
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
     blogLinks?: BlogLink[];
 };
 
 const OrderDetailComponent: NextPage<OrderProps> = (props) => {
-    const { order, types, pathname, asPath, blogLinks } = props;
+    const { order, types, resolvedUrl, blogLinks } = props;
 
     return (
         <>
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
+            <Header types={types ?? []} resolvedUrl={resolvedUrl} />
             {order && (
                 <div className="_max-width _order">
                     <h1 className="text-center font-extrabold text-2xl">
@@ -229,11 +228,35 @@ const OrderDetailComponent: NextPage<OrderProps> = (props) => {
     );
 };
 
-OrderDetailComponent.getInitialProps = async ({
+// OrderDetailComponent.getInitialProps = async ({
+//     query,
+//     pathname,
+//     asPath,
+// }: NextPageContext) => {
+//     try {
+//         const data = await Promise.all([
+//             await API.order.get(query.id as string),
+//             await API.type.gets(),
+//             await API.blog_link.gets({ select: "_id name slug" }),
+//         ]);
+//         return {
+//             order: data[0].data,
+//             types: data[1].data,
+//             blogLinks: data[2].data,
+//             pathname,
+//             asPath,
+//         };
+//     } catch {
+//         return { resolvedUrl };
+//     }
+// };
+
+export default OrderDetailComponent;
+
+export const getServerSideProps: GetServerSideProps<OrderProps> = async ({
     query,
-    pathname,
-    asPath,
-}: NextPageContext) => {
+    resolvedUrl,
+}: GetServerSidePropsContext) => {
     try {
         const data = await Promise.all([
             await API.order.get(query.id as string),
@@ -241,15 +264,14 @@ OrderDetailComponent.getInitialProps = async ({
             await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
-            order: data[0].data,
-            types: data[1].data,
-            blogLinks: data[2].data,
-            pathname,
-            asPath,
+            props: {
+                order: data[0].data,
+                types: data[1].data,
+                blogLinks: data[2].data,
+                resolvedUrl,
+            },
         };
     } catch {
-        return { pathname, asPath };
+        return { props: { resolvedUrl } };
     }
 };
-
-export default OrderDetailComponent;

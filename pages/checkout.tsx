@@ -1,4 +1,9 @@
-import { NextPage, NextPageContext } from "next";
+import {
+    GetServerSideProps,
+    GetServerSidePropsContext,
+    NextPage,
+    NextPageContext,
+} from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { BsChevronRight } from "react-icons/bs";
@@ -18,15 +23,13 @@ import { AppState } from "../store";
 
 type CheckoutProps = {
     types?: Type[];
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
     blogLinks?: BlogLink[];
 };
 
 const CheckoutComponent: NextPage<CheckoutProps> = ({
     types,
-    pathname,
-    asPath,
+    resolvedUrl,
     blogLinks,
 }) => {
     const carts = useSelector((s: AppState) => s.cart.carts);
@@ -51,7 +54,7 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
+            <Header types={types ?? []} resolvedUrl={resolvedUrl} />
             <div className="_max-width flex items-center text-base">
                 <Link href={route.CART}>
                     <a className="mr-2 text-blue-600">Giỏ hàng</a>
@@ -112,24 +115,45 @@ const CheckoutComponent: NextPage<CheckoutProps> = ({
     );
 };
 
-CheckoutComponent.getInitialProps = async ({
-    pathname,
-    asPath,
-}: NextPageContext) => {
+// CheckoutComponent.getInitialProps = async ({
+//     pathname,
+//     asPath,
+// }: NextPageContext) => {
+//     try {
+//         const data = await Promise.all([
+//             await API.type.gets(),
+//             await API.blog_link.gets({ select: "_id name slug" }),
+//         ]);
+//         return {
+//             types: data[0].data,
+//             blogLinks: data[1].data,
+//             pathname,
+//             asPath,
+//         };
+//     } catch {
+//         return { resolvedUrl };
+//     }
+// };
+
+export default CheckoutComponent;
+
+export const getServerSideProps: GetServerSideProps<CheckoutProps> = async ({
+    query,
+    resolvedUrl,
+}: GetServerSidePropsContext) => {
     try {
         const data = await Promise.all([
             await API.type.gets(),
             await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
-            types: data[0].data,
-            blogLinks: data[1].data,
-            pathname,
-            asPath,
+            props: {
+                types: data[0].data,
+                blogLinks: data[1].data,
+                resolvedUrl,
+            },
         };
     } catch {
-        return { pathname, asPath };
+        return { props: { resolvedUrl } };
     }
 };
-
-export default CheckoutComponent;

@@ -24,9 +24,7 @@ type TypeProductProps = {
     type?: TypeProduct;
     types?: Type[];
     query?: SearchBody;
-    pathname: string;
-    asPath?: string;
-    // resolvedUrl: string;
+    resolvedUrl: string;
     blogLinks?: BlogLink[];
 };
 
@@ -34,9 +32,7 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
     type,
     types,
     query,
-    pathname,
-    asPath,
-    // resolvedUrl,
+    resolvedUrl,
     blogLinks,
 }) => {
     const router = useRouter();
@@ -69,11 +65,11 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
             <Head>
                 <title>{type?.name}</title>
             </Head>
-            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
+            <Header types={types ?? []} resolvedUrl={resolvedUrl} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width flex  flex-wrap _shops">
                 <div className="_left">
-                    <Sider types={types ?? []} asPath={asPath} />
+                    <Sider types={types ?? []} resolvedUrl={resolvedUrl} />
                 </div>
                 <div className="_right">
                     <h1 className="px-5 text-2xl font-bold">{type?.name}</h1>
@@ -93,11 +89,39 @@ const TypeProductComponent: NextPage<TypeProductProps> = ({
     );
 };
 
-TypeProductComponent.getInitialProps = async ({
+// TypeProductComponent.getInitialProps = async ({
+//     query,
+//     pathname,
+//     asPath,
+// }: NextPageContext) => {
+//     try {
+//         const data = await Promise.all([
+//             await API.type.get(query.slug as string, {
+//                 select: "_id name slug sold price img img1 isSale",
+//                 ...query,
+//             }),
+//             await API.type.gets(),
+//             await API.blog_link.gets({ select: "_id name slug" }),
+//         ]);
+//         return {
+//             type: data[0].data,
+//             types: data[1].data,
+//             blogLinks: data[2].data,
+//             query,
+//             pathname,
+//             asPath,
+//         };
+//     } catch {
+//         return { pathname, asPath };
+//     }
+// };
+
+export default TypeProductComponent;
+
+export const getServerSideProps: GetServerSideProps<TypeProductProps> = async ({
     query,
-    pathname,
-    asPath,
-}: NextPageContext) => {
+    resolvedUrl,
+}: GetServerSidePropsContext) => {
     try {
         const data = await Promise.all([
             await API.type.get(query.slug as string, {
@@ -108,44 +132,15 @@ TypeProductComponent.getInitialProps = async ({
             await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
-            type: data[0].data,
-            types: data[1].data,
-            blogLinks: data[2].data,
-            query,
-            pathname,
-            asPath,
+            props: {
+                type: data[0].data,
+                types: data[1].data,
+                blogLinks: data[2].data,
+                query,
+                resolvedUrl,
+            },
         };
     } catch {
-        return { pathname, asPath };
+        return { props: { resolvedUrl } };
     }
 };
-
-export default TypeProductComponent;
-
-// export const getServerSideProps: GetServerSideProps<TypeProductProps> = async ({
-//     query,
-//     resolvedUrl,
-// }: GetServerSidePropsContext) => {
-
-//     try {
-//         const data = await Promise.all([
-//             await API.type.get(query.slug as string, {
-//                 select: "_id name slug sold price img img1 isSale",
-//                 ...query,
-//             }),
-//             await API.type.gets(),
-//             await API.blog_link.gets(),
-//         ]);
-//         return {
-//             props: {
-//                 type: data[0].data,
-//                 types: data[1].data,
-//                 blogLinks: data[2].data,
-//                 query,
-//                 resolvedUrl,
-//             },
-//         };
-//     } catch {
-//         return { props: { resolvedUrl } };
-//     }
-// };

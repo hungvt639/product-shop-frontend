@@ -8,12 +8,11 @@ import { Dispatch, SetStateAction, useState } from "react";
 type MenuMinProps = {
     show: boolean;
     types: Type[];
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
     setShowMenu: Dispatch<SetStateAction<boolean>>;
 };
 const MenuMin = (props: MenuMinProps) => {
-    const { pathname, show, types, asPath, setShowMenu } = props;
+    const { resolvedUrl, show, types, setShowMenu } = props;
 
     const [showType, setShowtype] = useState(false);
     return (
@@ -27,7 +26,7 @@ const MenuMin = (props: MenuMinProps) => {
             >
                 <div
                     className={`text-base py-3 border-b hover:bg-slate-50 font-semibold${
-                        pathname === route.HOME
+                        resolvedUrl === route.HOME
                             ? " border-b-4  border-stone-700"
                             : ""
                     }`}
@@ -36,7 +35,7 @@ const MenuMin = (props: MenuMinProps) => {
                 </div>
                 <div
                     className={`text-base py-3 border-b hover:bg-slate-50 font-semibold${
-                        pathname === route.PRODUCT
+                        resolvedUrl === route.PRODUCT
                             ? " border-b-4 border-stone-700"
                             : ""
                     }`}
@@ -45,7 +44,7 @@ const MenuMin = (props: MenuMinProps) => {
                 </div>
                 <div
                     className={`flex justify-between items-center text-base py-3 border-b hover:bg-slate-50 font-semibold${
-                        pathname.startsWith(route.SHOP)
+                        resolvedUrl.startsWith(route.SHOP)
                             ? " border-b-4 border-stone-700"
                             : ""
                     }`}
@@ -90,7 +89,7 @@ const MenuMin = (props: MenuMinProps) => {
                                 <div
                                     onClick={() => setShowMenu(false)}
                                     className={`text-base font-semibold py-2 px-2 border-b${
-                                        asPath?.startsWith(
+                                        resolvedUrl?.startsWith(
                                             route.SHOP + "/" + t.slug
                                         )
                                             ? " bg-stone-100"

@@ -1,5 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { NextPage, NextPageContext } from "next";
+import {
+    GetServerSideProps,
+    GetServerSidePropsContext,
+    NextPage,
+    NextPageContext,
+} from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -19,14 +24,12 @@ import utils from "../utils";
 
 type CartProps = {
     types?: Type[];
-    pathname: string;
-    asPath?: string;
+    resolvedUrl: string;
     blogLinks?: BlogLink[];
 };
 const CartComponentComponent: NextPage<CartProps> = ({
     types,
-    pathname,
-    asPath,
+    resolvedUrl,
     blogLinks,
 }) => {
     const carts = useSelector((s: AppState) => s.cart.carts);
@@ -44,7 +47,7 @@ const CartComponentComponent: NextPage<CartProps> = ({
             <Head>
                 <title>{_env.SHOP_NAME}</title>
             </Head>
-            <Header types={types ?? []} pathname={pathname} asPath={asPath} />
+            <Header types={types ?? []} resolvedUrl={resolvedUrl} />
             <BreadcrumbComponent data={breadcrumb} />
             <div className="_max-width _cart">
                 <h1 className="text-center font-extrabold text-2xl">
@@ -214,24 +217,45 @@ const CartComponentComponent: NextPage<CartProps> = ({
     );
 };
 
-CartComponentComponent.getInitialProps = async ({
-    pathname,
-    asPath,
-}: NextPageContext) => {
+// CartComponentComponent.getInitialProps = async ({
+//     pathname,
+//     asPath,
+// }: NextPageContext) => {
+//     try {
+//         const data = await Promise.all([
+//             await API.type.gets(),
+//             await API.blog_link.gets({ select: "_id name slug" }),
+//         ]);
+//         return {
+//             types: data[0].data,
+//             blogLinks: data[1].data,
+//             pathname,
+//             asPath,
+//         };
+//     } catch {
+//         return { resolvedUrl };
+//     }
+// };
+
+export default CartComponentComponent;
+
+export const getServerSideProps: GetServerSideProps<CartProps> = async ({
+    query,
+    resolvedUrl,
+}: GetServerSidePropsContext) => {
     try {
         const data = await Promise.all([
             await API.type.gets(),
             await API.blog_link.gets({ select: "_id name slug" }),
         ]);
         return {
-            types: data[0].data,
-            blogLinks: data[1].data,
-            pathname,
-            asPath,
+            props: {
+                types: data[0].data,
+                blogLinks: data[1].data,
+                resolvedUrl,
+            },
         };
     } catch {
-        return { pathname, asPath };
+        return { props: { resolvedUrl } };
     }
 };
-
-export default CartComponentComponent;
