@@ -48,6 +48,7 @@ export interface Product {
     updated_at: string;
     slug: string;
     sames?: Product[];
+    sold: number;
 }
 
 export interface ProductSearch {

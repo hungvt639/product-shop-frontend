@@ -4,53 +4,6 @@
     --bgr_success: #90bd99;
     --bgr_error: #c29b99;
 }
-@keyframes close {
-    0% {
-        transform: translateX(0%);
-    }
-    10% {
-        transform: translateX(-5%);
-    }
-    95% {
-        transform: translateX(150%);
-    }
-    100% {
-        // height: 0;
-        transform: translateX(150%);
-        overflow: hidden;
-        // margin: 0;
-        // padding: 0;
-        // border: 0;
-    }
-}
-@keyframes time_close {
-    0% {
-        width: 100%;
-    }
-    100% {
-        width: 0;
-    }
-}
-@keyframes before_show {
-    0% {
-        transform: translateX(100%);
-    }
-    20% {
-        transform: translateX(-10%);
-    }
-    40% {
-        transform: translateX(8%);
-    }
-    60% {
-        transform: translateX(-5%);
-    }
-    80% {
-        transform: translateX(3%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
 
 #__notify {
     display: flex;
@@ -102,11 +55,46 @@
     }
     .show-notify {
         animation: before_show 1s linear forwards;
+        @keyframes before_show {
+            0% {
+                transform: translateX(100%);
+            }
+            20% {
+                transform: translateX(-10%);
+            }
+            40% {
+                transform: translateX(8%);
+            }
+            60% {
+                transform: translateX(-5%);
+            }
+            80% {
+                transform: translateX(3%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
     }
     .not-show-notify {
         animation: close 1s linear forwards;
         // transition: all 1s ease-in-out;
         // transform: translate(0, 0px);
+        @keyframes close {
+            0% {
+                transform: translateX(0%);
+            }
+            10% {
+                transform: translateX(-5%);
+            }
+            95% {
+                transform: translateX(150%);
+            }
+            100% {
+                transform: translateX(150%);
+                overflow: hidden;
+            }
+        }
     }
     .message {
         flex: 1;
